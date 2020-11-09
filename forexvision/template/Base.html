@@ -50,10 +50,10 @@
 
     <!-- trial -->
 
-    <form class="form-inline" action="Currency_Exchange" method="POST" >
+    <form name = "SelectForm" class="form-inline" action="Currency_Exchange" method="POST" >
         {% csrf_token %}
         <input type="text" value="0" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" name="amount" style="font-size: large; border-radius: 25px">
-        <select id="currencyList" style="font-size: large; border-radius:25px;">
+        <select name = "baseCurr" id="currencyList" style="font-size: large; border-radius:25px;">
                     <option value="USD" selected="selected" label="US dollar">USD</option>
                     <option value="EUR" label="Euro">EUR</option>
                     <option value="JPY" label="Japanese yen">JPY</option>
@@ -220,8 +220,10 @@
                     <option value="ZMW" label="Zambian kwacha">ZMW</option>
                     <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
                 </select>
+
                 <label for="cur2" class="mb-2 mr-sm-2"><--></label>
-                <select id="currencyList" style="font-size: large; border-radius:25px;">
+
+                <select name="counterCurr" id="currencyList" style="font-size: large; border-radius:25px;">
                     <option value="USD" selected="selected" label="US dollar">USD</option>
                     <option value="EUR" label="Euro">EUR</option>
                     <option value="JPY" label="Japanese yen">JPY</option>
@@ -402,7 +404,7 @@
 </div>
 
 <div class="container-fluid bg-3 text-center">
-  <h3>Amount = {{amount}} {{base}} {{answer}}</h3><br>
+  <h3>Amount = {{amount}} {{baseCurr}} {{counterCurr}}</h3><br>
 
 </div><br>
 
