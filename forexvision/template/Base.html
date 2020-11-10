@@ -50,7 +50,7 @@
 
     <!-- trial -->
 
-    <form name = "SelectForm" class="form-inline" action="Currency_Exchange" method="POST" >
+    <form name = "SelectForm" class="form-inline" action="" method="POST" >
         {% csrf_token %}
         <input type="text" value="0" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" name="amount" style="font-size: large; border-radius: 25px">
         <select name = "baseCurr" id="currencyList" style="font-size: large; border-radius:25px;">
@@ -404,7 +404,11 @@
 </div>
 
 <div class="container-fluid bg-3 text-center">
-  <h3>Amount = {{amount}} {{baseCurr}} {{counterCurr}}</h3><br>
+    Amount = {{totalAmount}} <br>
+
+    1 {{base}} = {{counterrate}} {{counter}} <br>
+    1 {{counter}} = {{baserate}} {{base}} <br>
+    <br>
 
 </div><br>
 
