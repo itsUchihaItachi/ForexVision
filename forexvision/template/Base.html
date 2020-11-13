@@ -45,14 +45,10 @@
 
 <div class="jumbotron">
   <div class="container text-center" style="margin: auto;width:85%">
-    <!-- <h1>My Portfolio</h1>
-    <p>Some text that represents "Me"...</p> -->
 
-    <!-- trial -->
-
-    <form name = "SelectForm" class="form-inline" action="" method="POST" >
+    <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST" >
         {% csrf_token %}
-        <input type="text" value="0" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" name="amount" style="font-size: large; border-radius: 25px">
+        <input type="number" min="1"  class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" name="amount" style="font-size: large; border-radius: 25px">
         <select name = "baseCurr" id="currencyList" style="font-size: large; border-radius:25px;">
                     <option value="USD" selected="selected" label="US dollar">USD</option>
                     <option value="EUR" label="Euro">EUR</option>
@@ -221,9 +217,9 @@
                     <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
                 </select>
 
-                <label for="cur2" class="mb-2 mr-sm-2"><--></label>
+        <label for="cur2" class="mb-2 mr-sm-2"><--></label>
 
-                <select name="counterCurr" id="currencyList" style="font-size: large; border-radius:25px;">
+        <select name="counterCurr" id ="currencyList" style="font-size: large; border-radius:25px;">
                     <option value="USD" selected="selected" label="US dollar">USD</option>
                     <option value="EUR" label="Euro">EUR</option>
                     <option value="JPY" label="Japanese yen">JPY</option>
@@ -391,24 +387,23 @@
                     <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
                 </select>
 
-        <!-- <div class="form-check mb-2 mr-sm-2">
-          <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" name="remember"> Remember me
-          </label>
-        </div>     -->
-        <button type="submit" class="btn btn-primary mb-2" style="font-size: large; border-radius: 25px">Submit</button>
+        <button type="submit"  class="btn btn-primary mb-2"  style="font-size: large; border-radius: 25px">Submit</button>
       </form>
-    <!-- trial -->
 
   </div>
 </div>
 
 <div class="container-fluid bg-3 text-center">
-    Amount = {{totalAmount}} <br>
+ <h1>  Amount = {{totalAmount}} </h1> <br>
 
-    1 {{base}} = {{counterrate}} {{counter}} <br>
-    1 {{counter}} = {{baserate}} {{base}} <br>
+   <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
+   <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br>
+   <!-- Open : {{Open}} <br> -->
+   Last 30 days High : {{High}}<br>
+   Last 30 days Low : {{Low}} <br>
+   <!-- Close : {{Close}}<br> -->
     <br>
+    Last Updated on : {{lastUpd}} UTC
 
 </div><br>
 

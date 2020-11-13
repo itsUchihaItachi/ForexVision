@@ -2,41 +2,67 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from urllib.request import urlopen
 import json
+from datetime import date,timedelta
+
+API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
+# vishal = taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN
+# ravi = meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV
 
 # Create your views here.
+def temp(request):
+    return render(request,'Base.html')
+
 def home(request):
     amount = request.POST.get('amount')
 
     base = request.POST.get('baseCurr') # get the base currency symbol from user
     counter = request.POST.get('counterCurr') # get the counter currency symbol from user
 
-    counterrate = 0
-    baserate = 0
-    totalAmount = 0
+    # # Check if the base and counter is not none
+    # # After requesting the server and getting data from user
 
-    # Check if the base and counter is not none
-    # After requesting the server and getting data from user
-    if base != None and counter != None :
+    json_url = urlopen("https://fcsapi.com/api-v2/forex/converter?pair1="+base+"&pair2="+counter+"&amount="+amount+"&access_key="+API_KEY)
+    data = json.loads(json_url.read())
 
-        json_urlcounter = urlopen("https://api.exchangeratesapi.io/latest?base=" + base)
-        json_urlbase = urlopen("https://api.exchangeratesapi.io/latest?base=" + counter)
+    baseindex = "price_1x_"+base
+    counterindex = "price_1x_"+counter
 
-        counterdata = json.loads(json_urlcounter.read()) # fetching counter rates in the form of dict
-        basedata = json.loads(json_urlbase.read())       # fetching base rates in the form of dict
+    baserate = data['response'][baseindex]
+    counterrate = data['response'][counterindex]
+    totalAmount = data['response']['total']
 
-        # Getting the respective currency rate of counter currency
-        for i in counterdata['rates']:
-            if i == counter:
-                counterrate = counterdata['rates'].get(i)
-                break
+    High, Low = HighLow(base, counter)
+    lastUpd = lastUpdated(base, counter)
+    context = {'totalAmount' : totalAmount,
+                'base' : base, 'counter' : counter,
+                'counterrate' : counterrate, 'baserate' : baserate,
+                'lastUpd' : lastUpd,
+                'High' : High, 'Low' : Low }
+    return render(request,'Base.html',context)
 
-        for j in basedata['rates']:
-            if j == base:
-                baserate = basedata['rates'].get(j)
-                break
+def HighLow(base, counter):
+    today = date.today()
+    todayDate = today.strftime("%Y-%m-%d")
+    fromDate = today - timedelta(30)
 
-        totalAmount = float(amount) * counterrate  # Calculating total amount
-    return render(request,'base.html',{'totalAmount' : totalAmount,'base' : base, 'counter' : counter,  'counterrate' : counterrate, 'baserate' : baserate})
+    # https://fcsapi.com/api-v2/forex/history?symbol=EUR/USD&period=1d&from=2020-05-01T12:00&to=2020-11-11T12:00&access_key=taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN
+    json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=1d&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY)
+    data = json.loads(json_url.read())
 
+    dt = data['response']
 
+    high = []
+    low = []
 
+    for ls in dt:
+        high.append(ls['h'])
+        low.append(ls['l'])
+
+    return max(high), min(low)
+
+def lastUpdated(base, counter):
+    json_url = urlopen("https://fcsapi.com/api-v3/forex/latest?symbol="+base+"/"+counter+"&access_key="+API_KEY)
+    data = json.loads(json_url.read())
+
+    return data['response'][0]['tm']
+    
