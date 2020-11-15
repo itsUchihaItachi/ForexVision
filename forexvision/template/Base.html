@@ -44,12 +44,15 @@
 </nav>
 
 <div class="jumbotron">
-  <div class="container text-center" style="margin: auto;width:85%">
+  <div class="container text-center" style="margin: auto;width:90%">
 
     <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST" >
         {% csrf_token %}
-        <input type="number" min="1"  class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" name="amount" style="font-size: large; border-radius: 25px">
-        <select name = "baseCurr" id="currencyList" style="font-size: large; border-radius:25px;">
+        <div class=".col-xs-4 .col-sm-3 .col-lg-2" id = "UserAmount">
+          <input type="number" min="1"  class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" name="amount" style="font-size: large; border-radius: 25px">
+        </div>
+        <div class=".col-xs-4 .col-sm-3 .col-lg-3" id = "UserBaseCurr" width = 20%>
+          <select name = "baseCurr" id="currencyList" style="font-size: large; border-radius:25px;">
                     <option value="USD" selected="selected" label="US dollar">USD</option>
                     <option value="EUR" label="Euro">EUR</option>
                     <option value="JPY" label="Japanese yen">JPY</option>
@@ -216,10 +219,14 @@
                     <option value="ZMW" label="Zambian kwacha">ZMW</option>
                     <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
                 </select>
+        </div>
 
-        <label for="cur2" class="mb-2 mr-sm-2"><--></label>
+        <div class=".col-xs-2 .col-sm-2 .col-lg-2" id = "flipIcon" width = 5%>
+          <label for="cur2" class="mb-2 mr-sm-2"><--></label>
+        </div>
 
-        <select name="counterCurr" id ="currencyList" style="font-size: large; border-radius:25px;">
+        <div class=".col-xs-4 .col-sm-3 .col-lg-3" id = "UserBounterCurr" width = 20%>
+          <select name="counterCurr" id ="currencyList" style="font-size: large; border-radius:25px;">
                     <option value="USD" selected="selected" label="US dollar">USD</option>
                     <option value="EUR" label="Euro">EUR</option>
                     <option value="JPY" label="Japanese yen">JPY</option>
@@ -386,8 +393,11 @@
                     <option value="ZMW" label="Zambian kwacha">ZMW</option>
                     <option value="ZWB" label="Zimbabwean bonds">ZWB</option>
                 </select>
+        </div>
 
+      <div class=".col-xs-4 .col-sm-3 .col-lg-2" id = "submitBtn" width = 20%>
         <button type="submit"  class="btn btn-primary mb-2"  style="font-size: large; border-radius: 25px">Submit</button>
+      </div>
       </form>
 
   </div>
@@ -410,7 +420,9 @@
 <br><br>
 
 <footer class="container-fluid text-center">
-  <p>Footer Text</p>
+  {% autoescape off %}
+  {{lineGraph | safe}}
+  {% endautoescape %}
 </footer>
 
 </body>
