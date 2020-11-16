@@ -46,7 +46,8 @@ def home(request):
                 'counterrate' : counterrate, 'baserate' : baserate,
                 'lastUpd' : lastUpd,
                 'High' : High, 'Low' : Low,
-                'lineGraph' : lineGraph }
+                'lineGraph' : lineGraph
+             }
     return render(request,'Base.html',context)
 
 def lastUpdated(base, counter):
