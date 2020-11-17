@@ -41,12 +41,15 @@ def home(request):
     lastUpd = lastUpdated(base, counter)
     High, Low, lineGraph = graph(base, counter)
 
+    flag = "show"
+
     context = {'totalAmount' : totalAmount,
                 'base' : base, 'counter' : counter,
                 'counterrate' : counterrate, 'baserate' : baserate,
                 'lastUpd' : lastUpd,
                 'High' : High, 'Low' : Low,
-                'lineGraph' : lineGraph
+                'lineGraph' : lineGraph,
+                'flag' : flag
              }
     return render(request,'Base.html',context)
 

@@ -42,15 +42,17 @@
   </div>
 </nav>
 
-<div class="jumbotron">
-  <div class="container text-center" style="margin: auto;width:90%">
-
+<div class="jumbotron" style="margin: 50px;">
+  <p>ForexVision Currency Converter</p> 
+  <div class="container text-center" style = "margin: auto; width:100%">
+       
     <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST" >
         {% csrf_token %}
-        <div class=".col-xs-4 .col-sm-3 .col-lg-2" id = "UserAmount">
+      
+        <div  id = "UserAmount">
           <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" style="font-size: large; border-radius: 25px">
         </div>
-        <div class=".col-xs-4 .col-sm-3 .col-lg-3" id = "UserBaseCurr" width = 20%>
+        <div id = "UserBaseCurr" width = 20%>
           <select name = "baseCurr" value="{{ request.POST.baseCurr}}" id="currencyListBase" style="font-size: large; border-radius:25px;" >
             <option value="" disabled selected>Choose your Base Currency</option>
             <option value="USD"  {% if base == "USD" %}selected{%endif%} label="US dollar">USD</option>
@@ -68,7 +70,6 @@
             <option value="AUD"  {% if base == "AUD" %}selected{%endif%} label="Australian dollar">AUD</option>
             <option value="AWG"  {% if base == "AWG" %}selected{%endif%} label="Aruban florin">AWG</option>
             <option value="AZN"  {% if base == "AZN" %}selected{%endif%} label="Azerbaijani manat">AZN</option>
-            <option value="BAM"  {% if base == "BAM" %}selected{%endif%} label="Bosnia and Herzegovina convertible mark">BAM</option>
             <option value="BBD"  {% if base == "BBD" %}selected{%endif%} label="Barbadian dollar">BBD</option>
             <option value="BDT"  {% if base == "BDT" %}selected{%endif%} label="Bangladeshi taka">BDT</option>
             <option value="BGN"  {% if base == "BGN" %}selected{%endif%} label="Bulgarian lev">BGN</option>
@@ -220,12 +221,11 @@
                 </select>
         </div>
 
-        <div class=".col-xs-2 .col-sm-2 .col-lg-2" id = "flipIcon" width = 5%>
-          <!-- <{% if base == "UZS" %}selected{%endif%} label for="cur2" class="mb-2 mr-sm-2"><-></{% if base == "UZS" %}selected{%endif%} label>-->
+        <div id = "flipIcon" width = 5%>
           <img id="switch" class="mb-2 mr-sm-2" src="{% static 'swap.png' %}" alt = "Swap" width = "50px" height = "50px"/>
         </div>
 
-        <div class=".col-xs-4 .col-sm-3 .col-lg-3" id = "UserCounterCurr" width = 20%>
+        <div id = "UserCounterCurr" width = 20%>
           <select name="counterCurr" value="{{ request.POST.counterCurr}}" id ="currencyListCounter" style="font-size: large; border-radius:25px;" >
             <option value="" disabled selected>Choose your Counter Currency</option>
             <option value="USD"  {% if counter  == "USD" %}selected{%endif%} label="US dollar">USD</option>
@@ -243,7 +243,6 @@
             <option value="AUD"  {% if counter  == "AUD" %}selected{%endif%} label="Australian dollar">AUD</option>
             <option value="AWG"  {% if counter  == "AWG" %}selected{%endif%} label="Aruban florin">AWG</option>
             <option value="AZN"  {% if counter  == "AZN" %}selected{%endif%} label="Azerbaijani manat">AZN</option>
-            <option value="BAM"  {% if counter  == "BAM" %}selected{%endif%} label="Bosnia and Herzegovina convertible mark">BAM</option>
             <option value="BBD"  {% if counter  == "BBD" %}selected{%endif%} label="Barbadian dollar">BBD</option>
             <option value="BDT"  {% if counter  == "BDT" %}selected{%endif%} label="Bangladeshi taka">BDT</option>
             <option value="BGN"  {% if counter  == "BGN" %}selected{%endif%} label="Bulgarian lev">BGN</option>
@@ -395,16 +394,24 @@
                 </select>
         </div>
 
-      <div class=".col-xs-4 .col-sm-3 .col-lg-2" id = "submitBtn" width = 20%>
+      <div id = "submitBtn" width = 20%>
         <button type="submit"  class="btn btn-primary mb-2"  style="font-size: large; border-radius: 25px">Submit</button>
       </div>
-      </form>
-
+    </form>
+    {% if flag == "show"%}
+    <div style="float: center;">
+      <h1 >  Amount = {{totalAmount}} </h1> <br>
+      <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
+      <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br/><br/>
+      Last Updated on : {{lastUpd}} UTC
+    </div>
+    {% endif %}
   </div>
 </div>
 
 <br><br>
-<div class="container-fluid bg-3 text-center">
+{% if flag == "show"%}
+<div class="container-fluid bg-3 text-center" style="display:''; ">
   <!-- <div class="container">
     <div class="row">
       <h1 >  Amount = {{totalAmount}} </h1>
@@ -418,22 +425,25 @@
       <div class="col-*-*">Last 30 days Low : {{Low}}</div>
     </div>
   </div> -->
-    <h1 >  Amount = {{totalAmount}} </h1> <br>
+    <!-- <h1 >  Amount = {{totalAmount}} </h1> <br>
 
       <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
-      <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br>
+      <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br> -->
+        
+        <H3> Last 30 days High : {{High}} </H3> <H2>|</H2>
+        <H3> Last 30 days Low : {{Low}} </H3>
+        {{lineGraph | safe}}
+      </div>
+  {% endif %}
 
-      Last 30 days High : {{High}}<br>
-      Last 30 days Low : {{Low}} <br>
+       
+      <!-- Last Updated on : {{lastUpd}} UTC<br> -->
 
-       <br>
-      Last Updated on : {{lastUpd}} UTC<br>
-
- </div><br>
+ <!-- </div><br> -->
 
       <footer class="container-fluid text-center">
         <!-- {% autoescape off %} -->
-        {{lineGraph | safe}}
+        <!-- {{lineGraph | safe}} -->
         <!-- {% endautoescape %} -->
       </footer>
 
