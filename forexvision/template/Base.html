@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +51,8 @@
           <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" style="font-size: large; border-radius: 25px">
         </div>
         <div class=".col-xs-4 .col-sm-3 .col-lg-3" id = "UserBaseCurr" width = 20%>
-          <select name = "baseCurr" value="{{ request.POST.baseCurr}}" id="currencyList" style="font-size: large; border-radius:25px;">
+          <select name = "baseCurr" value="{{ request.POST.baseCurr}}" id="currencyListBase" style="font-size: large; border-radius:25px;" >
+            <option value="" disabled selected>Choose your Base Currency</option>
             <option value="USD"  {% if base == "USD" %}selected{%endif%} label="US dollar">USD</option>
             <option value="EUR"  {% if base == "EUR" %}selected{%endif%} label="Euro">EUR</option>
             <option value="JPY"  {% if base == "JPY" %}selected{%endif%} label="Japanese yen">JPY</option>
@@ -136,7 +138,7 @@
                     <option value="KRW"  {% if base == "KRW" %}selected{%endif%} label="South Korean won">KRW</option>
                     <option value="KWD"  {% if base == "KWD" %}selected{%endif%} label="Kuwaiti dinar">KWD</option>
                     <option value="KYD"  {% if base == "KYD" %}selected{%endif%} label="Cayman Islands dollar">KYD</option>
-                    <option value="KZT"  {% if base == "KZT" %}selected{%endif%} label="Kazakhstani tenge">KZT</option>                    
+                    <option value="KZT"  {% if base == "KZT" %}selected{%endif%} label="Kazakhstani tenge">KZT</option>
                     <option value="LAK" {% if base == "LAK" %}selected{%endif%} label="Lao kip">LAK</option>
                     <option value="LBP" {% if base == "LBP" %}selected{%endif%} label="Lebanese pound">LBP</option>
                     <option value="LKR" {% if base == "LKR" %}selected{%endif%} label="Sri Lankan rupee">LKR</option>
@@ -220,11 +222,12 @@
 
         <div class=".col-xs-2 .col-sm-2 .col-lg-2" id = "flipIcon" width = 5%>
           <!-- <{% if base == "UZS" %}selected{%endif%} label for="cur2" class="mb-2 mr-sm-2"><-></{% if base == "UZS" %}selected{%endif%} label>-->
-          <img class="mb-2 mr-sm-2" src="swap.png" alt = "Swap"/>
+          <img id="switch" class="mb-2 mr-sm-2" src="{% static 'swap.png' %}" alt = "Swap" width = "50px" height = "50px"/>
         </div>
 
         <div class=".col-xs-4 .col-sm-3 .col-lg-3" id = "UserCounterCurr" width = 20%>
-          <select name="counterCurr" value="{{ request.POST.counterCurr}}" id ="currencyList" style="font-size: large; border-radius:25px;">
+          <select name="counterCurr" value="{{ request.POST.counterCurr}}" id ="currencyListCounter" style="font-size: large; border-radius:25px;" >
+            <option value="" disabled selected>Choose your Counter Currency</option>
             <option value="USD"  {% if counter  == "USD" %}selected{%endif%} label="US dollar">USD</option>
             <option value="EUR"  {% if counter  == "EUR" %}selected{%endif%} label="Euro">EUR</option>
             <option value="JPY"  {% if counter  == "JPY" %}selected{%endif%} label="Japanese yen">JPY</option>
@@ -310,7 +313,7 @@
                     <option value="KRW"  {% if counter  == "KRW" %}selected{%endif%} label="South Korean won">KRW</option>
                     <option value="KWD"  {% if counter  == "KWD" %}selected{%endif%} label="Kuwaiti dinar">KWD</option>
                     <option value="KYD"  {% if counter  == "KYD" %}selected{%endif%} label="Cayman Islands dollar">KYD</option>
-                    <option value="KZT"  {% if counter  == "KZT" %}selected{%endif%} label="Kazakhstani tenge">KZT</option>                    
+                    <option value="KZT"  {% if counter  == "KZT" %}selected{%endif%} label="Kazakhstani tenge">KZT</option>
                     <option value="LAK" {% if counter  == "LAK" %}selected{%endif%} label="Lao kip">LAK</option>
                     <option value="LBP" {% if counter  == "LBP" %}selected{%endif%} label="Lebanese pound">LBP</option>
                     <option value="LKR" {% if counter  == "LKR" %}selected{%endif%} label="Sri Lankan rupee">LKR</option>
@@ -404,7 +407,7 @@
 <div class="container-fluid bg-3 text-center">
   <!-- <div class="container">
     <div class="row">
-      <h1 >  Amount = {{totalAmount}} </h1> 
+      <h1 >  Amount = {{totalAmount}} </h1>
     </div>
     <div class="row">
       <div class="col-*-*"> <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2></div>
@@ -419,14 +422,14 @@
 
       <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
       <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br>
-      
+
       Last 30 days High : {{High}}<br>
       Last 30 days Low : {{Low}} <br>
-      
+
        <br>
       Last Updated on : {{lastUpd}} UTC<br>
-    
- </div><br> 
+
+ </div><br>
 
       <footer class="container-fluid text-center">
         <!-- {% autoescape off %} -->
@@ -434,8 +437,25 @@
         <!-- {% endautoescape %} -->
       </footer>
 
-
-
-
 </body>
+<script>
+/*    var drop1, drop2;
+    function storeValBase() {
+        drop1 = document.getElementById("currencyListBase").options[document.getElementById("currencyListBase").selectedIndex];
+        //alert(drop1)
+    }
+
+    function storeValCounter() {
+        drop2 = document.getElementById("currencyListCounter").options[document.getElementById("currencyListCounter").selectedIndex];
+    }
+*/
+    document.getElementById("switch").onclick = function() {
+        var drop1 = document.getElementById("currencyListBase");
+        var drop2 = document.getElementById("currencyListCounter");
+        var tempHTML = drop1.innerHTML;
+        drop1.innerHTML = drop2.innerHTML;
+        drop2.innerHTML = tempHTML;
+
+    }
+</script>
 </html>
