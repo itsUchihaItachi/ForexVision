@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Forex Vision</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -43,12 +43,12 @@
 </nav>
 
 <div class="jumbotron" style="margin: 50px;">
-  <p>ForexVision Currency Converter</p> 
+  <p>ForexVision Currency Converter</p>
   <div class="container text-center" style = "margin: auto; width:100%">
-       
+
     <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST" >
         {% csrf_token %}
-      
+
         <div  id = "UserAmount">
           <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" style="font-size: large; border-radius: 25px">
         </div>
@@ -412,53 +412,18 @@
 <br><br>
 {% if flag == "show"%}
 <div class="container-fluid bg-3 text-center" style="display:''; ">
-  <!-- <div class="container">
-    <div class="row">
-      <h1 >  Amount = {{totalAmount}} </h1>
-    </div>
-    <div class="row">
-      <div class="col-*-*"> <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2></div>
-      <div class="col-*-*">  Last 30 days High : {{High}}</div>
-    </div>
-    <div class="row">
-      <div class="col-*-*">1 {{counter}} = {{baserate}} {{base}}</div>
-      <div class="col-*-*">Last 30 days Low : {{Low}}</div>
-    </div>
-  </div> -->
-    <!-- <h1 >  Amount = {{totalAmount}} </h1> <br>
+<button type = "button">
+   <a href = "{% url 'charts' %}">Get chart analysis </a>
+</button>
+</div>
 
-      <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
-      <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br> -->
-        
-        <H3> Last 30 days High : {{High}} </H3> <H2>|</H2>
-        <H3> Last 30 days Low : {{Low}} </H3>
-        {{lineGraph | safe}}
-      </div>
-  {% endif %}
-
-       
-      <!-- Last Updated on : {{lastUpd}} UTC<br> -->
-
- <!-- </div><br> -->
-
+{% endif %}
       <footer class="container-fluid text-center">
-        <!-- {% autoescape off %} -->
-        <!-- {{lineGraph | safe}} -->
-        <!-- {% endautoescape %} -->
+
       </footer>
 
 </body>
 <script>
-/*    var drop1, drop2;
-    function storeValBase() {
-        drop1 = document.getElementById("currencyListBase").options[document.getElementById("currencyListBase").selectedIndex];
-        //alert(drop1)
-    }
-
-    function storeValCounter() {
-        drop2 = document.getElementById("currencyListCounter").options[document.getElementById("currencyListCounter").selectedIndex];
-    }
-*/
     document.getElementById("switch").onclick = function() {
         var drop1 = document.getElementById("currencyListBase");
         var drop2 = document.getElementById("currencyListCounter");

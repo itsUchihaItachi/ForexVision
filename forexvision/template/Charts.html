@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Analysis</title>
+</head>
+<body>
+
+    <H3> Last 30 days High : {{D_High}} </H3>
+    <H3> Last 30 days Low : {{D_Low}} </H3><br>
+    <div>
+        <div id = "D_div" style = "height:50%; width : 50%;">
+            {{D_fig | safe}}<br>
+        </div>
+        <div id = "W_div" style = "height:50%; width : 50%; display : none">
+            {{W_fig | safe}}<br>
+        </div>
+        <div id = "M_div" style = "height:50%; width : 50%; display : none">
+            {{M_fig | safe}}<br>
+        </div>
+    </div>
+    <button type = "button" style = "display: hidden;" onclick="myFunction()"> Show Weekly Analysis</button>
+    <button type = "button" > Show Monthly Analysis</button>
+    <button type = "button"> Show Yearly Analysis</button>
+    {{W_fig | safe}}
+    {{M_fig | safe}}
+
+</body>
+<script>
+    function myFunction() {
+        var x = document.getElementById("D_div");
+        var y = document.getElementById("W_div");
+        var z = document.getElementById("M_div");
+        if (y.style.display === "none") {
+          y.style.display = "block";
+          x.style.display = "none";
+          z.style.display = "none";
+        }
+      }
+</script>
+</html>
