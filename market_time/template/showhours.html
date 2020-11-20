@@ -6,38 +6,134 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+table, td, th {
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 15px;
+}
+</style>
 </head>
+
+
+
+
+
 <body>
 <div class="container">
 <br><br>
 
-
-<form method="GET">
+    <form method="GET">
   {%csrf_token%}
-<table class="table table-striped">
+
+<h3 align="center" >Forex Trading centres in the world opening hours (24 hour format)</h3>
+<table border = "2" width = "900" height = "200"  >
     <thead>
 
-      <tr>
-         <th>ID</th>
-		     <th>Country_Name</th>
-         <th>OPen_time</th>
-         <th>Close_time</th>
-         <th>Status</th>
+      <tr bgcolor="lightgray">
+          <th colspan="2" >Forex Trading centres in the world</th>
+         <th>Trading hours in local time</th>
+
 		</tr>
     </thead>
-    <tbody>
-	{% for f in forexs %}
-      <tr>
-        <td>{{f.id}}</td>
-        <td>{{f.country_name}}</td>
-        <td>{{f.open_time}}</td>
-        <td>{{f.close_time}}</td>
-        <td>{{f.status}}</td>
+   <tbody>
+      <tr bgcolor="orange">
+        <td rowspan="8" >Forex Oceania-Asia session</td>
+        <td> Wellington, New Zealand </td>
+        <td>08:00 - 17:00</td>
 		</tr>
-	  {% endfor %}
-	</tbody>
+
+        <tr bgcolor="orange">
+        <td>Sydney, Australia</td>
+        <td> 08:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="orange">
+        <td>Tokyo, Japan</td>
+        <td> 08:00 - 17:00</td>
+		</tr>
+
+
+        <tr bgcolor="orange">
+        <td>Hong Kong, China</td>
+        <td> 09:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="orange">
+        <td> Shanghai, China/td>
+        <td> 09:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="orange">
+        <td>Singapore, Singapore </td>
+        <td> 09:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="orange">
+        <td>India</td>
+        <td>09:00 - 17:00</td>
+
+		</tr>
+
+        <tr bgcolor="orange">
+        <td>Moscow, Russia</td>
+        <td> 09:30 - 19:00 	</td>
+		</tr>
+
+        <tr bgcolor="gray">
+        <td rowspan="5" >Forex Europe session</td>
+        <td> Frankfurt, Germany	</td>
+        <td>07:00 - 15:00</td>
+		</tr>
+
+        <tr bgcolor="gray">
+        <td>Zurich, Switzerland</td>
+        <td> 09:00 - 17:30</td>
+		</tr>
+
+        <tr bgcolor="gray">
+        <td>Paris, France</td>
+        <td>09:00 - 17:30 </td>
+		</tr>
+
+        <tr bgcolor="gray">
+        <td>London, United Kingdom</td>
+        <td> 08:00 - 16:00</td>
+		</tr>
+
+        <tr bgcolor="gray">
+        <td>Johannesburg, South Africa </td>
+        <td> 09:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="violet">
+        <td rowspan="3" bgcolor="violet">Forex Americas session</td>
+        <td> New York, United States</td>
+        <td>08:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="violet">
+        <td>Toronto, Canada </td>
+        <td> 08:00 - 17:00</td>
+		</tr>
+
+        <tr bgcolor="violet">
+        <td>Chicago, United States</td>
+        <td> 08:00 - 16:00</td>
+		</tr>
+
+
+
+   </tbody>
 </table>
-{{checkl}}
 
 </form>
 </div>
