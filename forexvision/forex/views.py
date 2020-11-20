@@ -141,3 +141,6 @@ def W_chart(todayDate, fromDate):
 
     return W_fig
 
+def market(request):
+    return render(request,'Market.html')
+

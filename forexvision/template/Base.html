@@ -26,6 +26,10 @@
       background-color: #f2f2f2;
       padding: 25px;
     }
+
+    form {
+        text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -44,9 +48,9 @@
 
 <div class="jumbotron" style="margin: 50px;">
   <p>ForexVision Currency Converter</p>
-  <div class="container text-center" style = "margin: auto; width:100%">
+  <div class="container text-center"  style = "margin: auto; width:100%;">
 
-    <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST" >
+    <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST">
         {% csrf_token %}
 
         <div  id = "UserAmount">
@@ -402,8 +406,8 @@
     <div style="float: center;">
       <h1 >  Amount = {{totalAmount}} </h1> <br>
       <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
-      <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br/><br/>
-      Last Updated on : {{lastUpd}} UTC
+      <h2> 1 {{counter}} = {{baserate}} {{base}}</h2> <br/><br/>
+      <h3>Last Updated on : {{lastUpd}} UTC </h3>
     </div>
     {% endif %}
   </div>
@@ -412,9 +416,11 @@
 <br><br>
 {% if flag == "show"%}
 <div class="container-fluid bg-3 text-center" style="display:''; ">
-<button type = "button">
-   <a href = "{% url 'charts' %}">Get chart analysis </a>
-</button>
+   <a class="btn btn-primary btn-lg" href="{% url 'charts' %}" role="button">Get chart analysis</a>
+<!-- </div>
+
+<div> -->
+    <a class="btn btn-primary btn-lg" href="{% url 'market' %}" role="button">Get Market Hours</a>
 </div>
 
 {% endif %}
