@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>country wise  forex hours</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+<br><br>
+
+
+<form method="GET">
+  {%csrf_token%}
+<table class="table table-striped">
+    <thead>
+
+      <tr>
+         <th>ID</th>
+		     <th>Country_Name</th>
+         <th>OPen_time</th>
+         <th>Close_time</th>
+         <th>Status</th>
+		</tr>
+    </thead>
+    <tbody>
+	{% for f in forexs %}
+      <tr>
+        <td>{{f.id}}</td>
+        <td>{{f.country_name}}</td>
+        <td>{{f.open_time}}</td>
+        <td>{{f.close_time}}</td>
+        <td>{{f.status}}</td>
+		</tr>
+	  {% endfor %}
+	</tbody>
+</table>
+{{checkl}}
+
+</form>
+</div>
+</body>
+</html>
