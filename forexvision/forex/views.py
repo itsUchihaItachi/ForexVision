@@ -48,6 +48,8 @@ def home(request):
     lastUpd = lastUpdated()
     flag = "show"
 
+    # dt = M_data['response']
+
     context = {'totalAmount' : totalAmount,
                 'base' : base, 'counter' : counter,
                 'counterrate' : counterrate, 'baserate' : baserate,
@@ -83,8 +85,7 @@ def charts(request):
     for ls in dt:
         if count >= len(dt) - 30:
             D_high.append(ls['h'])
-            D_low.append(ls['l'])
-
+            D_low.append(ls['l']) 
         D_close.append(ls['c'])
         D_date.append(ls['tm'][0:10])
         count += 1
@@ -141,3 +142,5 @@ def W_chart(todayDate, fromDate):
 
     return W_fig
 
+def market(request):
+    return render(request,'Market.html')

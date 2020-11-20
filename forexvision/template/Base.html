@@ -43,17 +43,17 @@
 </nav>
 
 <div class="jumbotron" style="margin: 50px;">
-  <p>ForexVision Currency Converter</p>
+  <p style="font-size: 50px ;">ForexVision Currency Converter</p>
   <div class="container text-center" style = "margin: auto; width:100%">
 
     <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST" >
         {% csrf_token %}
 
         <div  id = "UserAmount">
-          <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" style="font-size: large; border-radius: 25px">
+          <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" style="font-size: large; border-radius: 25px;width: 300px !important;height: 48px !important">
         </div>
         <div id = "UserBaseCurr" width = 20%>
-          <select name = "baseCurr" value="{{ request.POST.baseCurr}}" id="currencyListBase" style="font-size: large; border-radius:25px;" >
+          <select name = "baseCurr" class = "form-control" value="{{ request.POST.baseCurr}}" id="currencyListBase"  style="font-size: large; border-radius:25px; width: 300px !important;height: 50px !important;" >
             <option value="" disabled selected>Choose your Base Currency</option>
             <option value="USD"  {% if base == "USD" %}selected{%endif%} label="US dollar">USD</option>
             <option value="EUR"  {% if base == "EUR" %}selected{%endif%} label="Euro">EUR</option>
@@ -226,7 +226,7 @@
         </div>
 
         <div id = "UserCounterCurr" width = 20%>
-          <select name="counterCurr" value="{{ request.POST.counterCurr}}" id ="currencyListCounter" style="font-size: large; border-radius:25px;" >
+          <select name="counterCurr" class = "form-control" value="{{ request.POST.counterCurr}}" id ="currencyListCounter" style="font-size: large; border-radius:25px;width: 300px !important;height: 50px !important" >
             <option value="" disabled selected>Choose your Counter Currency</option>
             <option value="USD"  {% if counter  == "USD" %}selected{%endif%} label="US dollar">USD</option>
             <option value="EUR"  {% if counter  == "EUR" %}selected{%endif%} label="Euro">EUR</option>
@@ -394,16 +394,16 @@
                 </select>
         </div>
 
-      <div id = "submitBtn" width = 20%>
-        <button type="submit"  class="btn btn-primary mb-2"  style="font-size: large; border-radius: 25px">Submit</button>
+      <div id = "submitBtn" width = 20% style="margin-left: 10px;">
+        <button type="submit"  class="btn btn-success btn-lg" style="border-radius:25px;font-size: large;width: 120px !important;height: 50px !important ;" >Submit</button>
       </div>
     </form>
     {% if flag == "show"%}
     <div style="float: center;">
       <h1 >  Amount = {{totalAmount}} </h1> <br>
       <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
-      <h3> 1 {{counter}} = {{baserate}} {{base}}</h3> <br/><br/>
-      Last Updated on : {{lastUpd}} UTC
+      <h2> 1 {{counter}} = {{baserate}} {{base}}</h2> <br/><br/>
+      <h3>Last Updated on : {{lastUpd}} UTC</h3>
     </div>
     {% endif %}
   </div>
@@ -412,14 +412,14 @@
 <br><br>
 {% if flag == "show"%}
 <div class="container-fluid bg-3 text-center" style="display:''; ">
-<button type = "button">
-   <a href = "{% url 'charts' %}">Get chart analysis </a>
-</button>
+  <a class="btn btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'charts' %}" role="button">Get chart analysis</a>
+  <a class="btn btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'market' %}" role="button">Get Market Hours</a>
+
 </div>
 
 {% endif %}
       <footer class="container-fluid text-center">
-
+       
       </footer>
 
 </body>
