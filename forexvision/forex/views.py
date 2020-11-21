@@ -6,6 +6,7 @@ from datetime import date,timedelta
 import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
+from .models import forex_hours
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
 API_KEY1 = "meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV"
@@ -85,13 +86,14 @@ def charts(request):
     for ls in dt:
         if count >= len(dt) - 30:
             D_high.append(ls['h'])
-            D_low.append(ls['l']) 
+            D_low.append(ls['l'])
         D_close.append(ls['c'])
         D_date.append(ls['tm'][0:10])
         count += 1
 
     D_fig = plot([Scatter(x=D_date, y=D_close,
-                        mode='lines', name='test',
+                        # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
+                        mode='lines+markers', name='test',
                         opacity=0.8, marker_color='blue')],
                output_type='div')
 
@@ -117,7 +119,8 @@ def M_chart(todayDate, fromDate):
         M_date.append(ls['tm'][0:10])
 
     M_fig = plot([Scatter(x=M_date, y=M_close,
-                        mode='lines', name='test',
+                        # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
+                        mode='lines+markers', name='test',
                         opacity=0.8, marker_color='blue')],
                output_type='div')
 
@@ -136,11 +139,14 @@ def W_chart(todayDate, fromDate):
         W_date.append(ls['tm'][0:10])
 
     W_fig = plot([Scatter(x=W_date, y=W_close,
-                        mode='lines', name='test',
+                        # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
+                        mode='lines+markers', name='test',
                         opacity=0.8, marker_color='blue')],
                output_type='div')
 
     return W_fig
 
 def market(request):
-    return render(request,'Market.html')
+    forexs = forex_hours.objects.all()
+    return render(request, 'Market.html', {'forexs': forexs})
+

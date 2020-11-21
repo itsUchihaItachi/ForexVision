@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="{% static 'basehtml.css'%}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -14,23 +14,6 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-
-    form {
-        text-align: center;
-    }
-  </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -41,23 +24,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand"  href="/" style="font-size: x-large;">Forex Vision</a>
+      <a class="navbar-brand"  href="/">Forex Vision</a>
     </div>
   </div>
 </nav>
 
-<div class="jumbotron" style="margin: 50px;">
+<div class="jumbotron">
   <p style="font-size: 50px ;">ForexVision Currency Converter</p>
-  <div class="container text-center" style = "margin: auto; width:100%">
+  <div class="container text-center">
 
     <form name = "SelectForm" class="form-inline" action="ExchangeCurr" method="POST">
         {% csrf_token %}
-
         <div  id = "UserAmount">
-          <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount" style="font-size: large; border-radius: 25px;width: 300px !important;height: 48px !important">
+          <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control mb-2 mr-sm-2" id="amt" placeholder="Enter Amount">
         </div>
         <div id = "UserBaseCurr" width = 20%>
-          <select name = "baseCurr" class = "form-control" value="{{ request.POST.baseCurr}}" id="currencyListBase"  style="font-size: large; border-radius:25px; width: 300px !important;height: 50px !important;" >
+          <select name = "baseCurr" class = "form-control" value="{{ request.POST.baseCurr}}" id="currencyListBase"  >
             <option value="" disabled selected>Choose your Base Currency</option>
             <option value="USD"  {% if base == "USD" %}selected{%endif%} label="US dollar">USD</option>
             <option value="EUR"  {% if base == "EUR" %}selected{%endif%} label="Euro">EUR</option>
@@ -230,7 +212,7 @@
         </div>
 
         <div id = "UserCounterCurr" width = 20%>
-          <select name="counterCurr" class = "form-control" value="{{ request.POST.counterCurr}}" id ="currencyListCounter" style="font-size: large; border-radius:25px;width: 300px !important;height: 50px !important" >
+          <select name="counterCurr" class = "form-control" value="{{ request.POST.counterCurr}}" id ="currencyListCounter" >
             <option value="" disabled selected>Choose your Counter Currency</option>
             <option value="USD"  {% if counter  == "USD" %}selected{%endif%} label="US dollar">USD</option>
             <option value="EUR"  {% if counter  == "EUR" %}selected{%endif%} label="Euro">EUR</option>
@@ -398,12 +380,12 @@
                 </select>
         </div>
 
-      <div id = "submitBtn" width = 20% style="margin-left: 10px;">
-        <button type="submit"  class="btn btn-success btn-lg" style="border-radius:25px;font-size: large;width: 120px !important;height: 50px !important ;" >Submit</button>
+      <div id = "submitBtn" width = 20% >
+        <button type="submit"  class="btnSubmit btn-success btn-lg" >Submit</button>
       </div>
     </form>
     {% if flag == "show"%}
-    <div style="float: center;">
+    <div class = "AmountData">
       <h1 >  Amount = {{totalAmount}} </h1> <br>
       <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
       <h2> 1 {{counter}} = {{baserate}} {{base}}</h2> <br/><br/>
@@ -415,15 +397,16 @@
 
 <br><br>
 {% if flag == "show"%}
-<div class="container-fluid bg-3 text-center" style="display:''; ">
-  <a class="btn btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'charts' %}" role="button">Get chart analysis</a>
-  <a class="btn btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'market' %}" role="button">Get Market Hours</a>
+<div class="container-fluidChtMkt bg-3 text-center">
+  <a class="btnCht btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:15px;font-size: large;padding-top:5px;width: 300px !important;height: 50px !important ;" href="{% url 'charts' %}" role="button">Get chart analysis</a>
+  <a class="btnMkt btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:15px;font-size: large;padding-top:5px;width: 300px !important;height: 50px !important ;" href="{% url 'market' %}" role="button">Get Market Hours</a>
 
 </div>
 
 {% endif %}
+<br>
       <footer class="container-fluid text-center">
-       
+
       </footer>
 
 </body>

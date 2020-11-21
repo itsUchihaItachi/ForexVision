@@ -1,0 +1,68 @@
+/* Remove the navbar's default margin-bottom and rounded borders */
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    }
+
+/* Add a gray background color and some padding to the footer */
+footer {
+    background-color: #000000;
+    padding: 25px;
+  }
+
+.navbar-header {
+    font-size : xx-large;
+}
+
+.jumbotron {
+    margin: 50px;
+}
+
+.container {
+    margin: auto;
+    width:100%;
+}
+
+.form-control {
+    font-size: large;
+    border-radius: 25px;
+    width: 300px !important;
+    height: 50px !important;
+}
+/* style="font-size: large; border-radius: 25px;width: 300px !important;height: 48px !important" */
+
+.form-control {
+    font-size: large;
+    border-radius:25px;
+    width: 300px !important;
+    height: 50px !important;
+}
+
+#submitBtn {
+    margin-left: 20px;
+}
+
+.btnSubmit {
+    border-radius : 25px;
+    font-size: large;
+    width: 120px !important;
+    height: 50px !important ;
+}
+
+.AmountData {
+    float: center;
+}
+
+/* .container-fluidChtMkt {
+    display:'';
+} */
+
+/* .btnCht , .btnMkt {
+    margin-left:25px;
+    text-align:center;
+    border-radius:25px;
+    font-size: large;
+    padding-top:5px;
+    width: 200px !important;
+    height: 50px !important ;
+} */
