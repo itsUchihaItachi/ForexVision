@@ -398,16 +398,17 @@
                 </select>
         </div>
 
-      <div id = "submitBtn" width = 20% style="margin-left: 10px;">
-        <button type="submit"  class="btn btn-success btn-lg" style="border-radius:25px;font-size: large;width: 120px !important;height: 50px !important ;" >Submit</button>
+      <div id = "submitBtndiv" width = 20% style="margin-left: 10px;">
+        <button id="submitBtn" type="submit" class="btn btn-success btn-lg" style="border-radius:25px;font-size: large;width: 120px !important;height: 50px !important ;" >Submit</button>
       </div>
     </form>
     {% if flag == "show"%}
+
     <div style="float: center;">
       <h1 >  Amount = {{totalAmount}} </h1> <br>
       <h2> 1 {{base}} = {{counterrate}} {{counter}}</h2> <br>
       <h2> 1 {{counter}} = {{baserate}} {{base}}</h2> <br/><br/>
-      <h3>Last Updated on : {{lastUpd}} UTC</h3>
+      <h3> Last Updated on : {{lastUpd}} UTC</h3>
     </div>
     {% endif %}
   </div>
@@ -416,8 +417,8 @@
 <br><br>
 {% if flag == "show"%}
 <div class="container-fluid bg-3 text-center" style="display:''; ">
-  <a class="btn btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'charts' %}" role="button">Get chart analysis</a>
-  <a class="btn btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'market' %}" role="button">Get Market Hours</a>
+  <a class="btnChart btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'charts' %}" role="button">Get chart analysis</a>
+  <a class="btnMarket btn-primary btn-lg" style="margin-left:25px; text-align:center;border-radius:25px;font-size: large;padding-top:5px;width: 200px !important;height: 50px !important ;" href="{% url 'market' %}" role="button">Get Market Hours</a>
 
 </div>
 
@@ -436,6 +437,29 @@
         drop2.innerHTML = tempHTML;
 
     }
+
+   /* function disableBtns() {
+    document.getElementsByClassName("BtnChart").disabled = true;
+    var timer = setInterval(function(){enableBtns()},60000);
+    //1000 means 1000 milliseconds
+    }
+
+    function enableBtns(){
+    document.getElementById("BtnChart").disabled = false;
+    clearInterval(timer);
+    }
+
+    function myfunction()
+    {
+        var timer = setInterval(60000);
+        if(document.getElementById("submitBtn").onclick=false)
+        {
+            disableBtns();
+        }
+        var timer = setInterval(function(){enableBtns()},60000);
+    }*/
+
+
 </script>
 </html>
 
