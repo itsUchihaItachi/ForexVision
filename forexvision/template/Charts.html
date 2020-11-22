@@ -4,20 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chart Analysis</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
 
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Forex Vision</a>
+          </div>
+        </div>
+      </nav>
+    <div class = "jumbotron" style="margin: 50px; padding : 10px 10px 10px 10px;">
+    <h1>Base Currency : {{base}} || Counter Currency :  {{counter}}</h1>
     <H3> Last 30 days High : {{D_High}} </H3>
     <H3> Last 30 days Low : {{D_Low}} </H3><br>
     <div>
         <h1 id = "chart_heading"> Daily Analysis </h1>
-        <div id = "D_div" >
+        <div id = "D_div" style="width: 50%;">
             {{D_fig | safe}}<br>
         </div>
-        <div id = "W_div" style = "display : none">
+        <div id = "W_div" style = "display : none; width : 50%;" >
             {{W_fig | safe}}<br>
         </div>
-        <div id = "M_div" style = "display : none">
+        <div id = "M_div" style = "display : none; width : 50%;">
             {{M_fig | safe}}<br>
         </div>
     </div>
@@ -25,23 +41,21 @@
     <button type = "button" id = "monthly"  onclick=" myFunction();"> Show Monthly Analysis</button>
     <button type = "button" id = "daily" onclick="myFunction();"> Show Daily Analysis</button>
 
-
+</div>
 </body>
 <script>
     function myFunction() {
         var id = event.target.id
-        
+
         var ch_head = document.getElementById("chart_heading");
         var x = document.getElementById("D_div");
         var y = document.getElementById("W_div");
         var z = document.getElementById("M_div");
         if (id == "weekly") {
-          ch_head.innerHTML = "Weekly Aalysis";
+          ch_head.innerHTML = "Weekly Analysis";
           y.style.display = "block";
           x.style.display = "none";
           z.style.display = "none";
-          y.style.height = "50%";
-          y.style.width  = "60%"
         }
         else if(id == "monthly")
         {
@@ -49,16 +63,12 @@
             y.style.display = "none";
             x.style.display = "none";
             z.style.display = "block";
-            z.style.height = "50%";
-            z.style.width  = "60%"
         }
         else{
             ch_head.innerHTML = "Daily Analysis";
             y.style.display = "none";
             x.style.display = "block";
             z.style.display = "none";
-            x.style.height = "50%";
-            x.style.width  = "60%"
         }
       }
 </script>
