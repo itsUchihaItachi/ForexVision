@@ -9,6 +9,7 @@ from plotly.graph_objs import Scatter
 from .models import forex_hours
 from datetime import datetime
 import pytz
+import calendar
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
 API_KEY1 = "meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV"
@@ -174,36 +175,43 @@ def W_chart(todayDate, fromDate):
         return W_fig
 
 def market(request):
-    # Countrydict = {
-    #         'Sydney, Australia' : 'Australia/Sydney',
-    #         'Tokyo, Japan' : 'Japan',
-    #         'Hong Kong, China' : 'Asia/Hong_Kong',
-    #         'Shanghai, China' : 'Asia/Shanghai',
-    #         'Singapore, Singapore' : 'Asia/Singapore',
-    #         'India' : 'Asia/Kolkata',
-    #         'Moscow, Russia' : 'Europe/Moscow',
-    #         'Frankfurt, Germany' : 'Europe/Zurich',
-    #         'Zurich, Switzerland' : 'Europe/Zurich',
-    #         'Paris, France' : 'Europe/Paris',
-    #         'London, United Kingdom' : 'Europe/London',
-    #         'Johannesburg, South Africa' : 'Africa/Johannesburg',
-    #         'New York, United States' : 'America/New_York',
-    #         'Toronto, Canada' : 'America/Toronto',
-    #         'Chicago, United States' : 'America/Chicago'}
+    Countrydict = {
+            'Sydney, Australia' : 'Australia/Sydney',
+            'Tokyo, Japan' : 'Japan',
+            'Hong Kong, China' : 'Asia/Hong_Kong',
+            'Shanghai, China' : 'Asia/Shanghai',
+            'Singapore, Singapore' : 'Asia/Singapore',
+            'India' : 'Asia/Kolkata',
+            'Moscow, Russia' : 'Europe/Moscow',
+            'Frankfurt, Germany' : 'Europe/Zurich',
+            'Zurich, Switzerland' : 'Europe/Zurich',
+            'Paris, France' : 'Europe/Paris',
+            'London, United Kingdom' : 'Europe/London',
+            'Johannesburg, South Africa' : 'Africa/Johannesburg',
+            'New York, United States' : 'America/New_York',
+            'Toronto, Canada' : 'America/Toronto',
+            'Chicago, United States' : 'America/Chicago'}
     forexs = forex_hours.objects.all()
-    # c_name = forex_hours.objects.get(name=country_name)
-    # print(c_name)
+    print(len(forexs))
+    # values = forex_hours.objects.values('country_name')[1]['country_name']
+    # print(values)
+    countryTZDict = {}
+    for i in range(len(forexs)):
+         OTime = int(forex_hours.objects.values('open_time')[i]['open_time'][0:2])
+         CTime = int(forex_hours.objects.values('close_time')[i]['close_time'][0:2])
+         values = forex_hours.objects.values('country_name')[i]['country_name']
+         print(type(values))
+         date = str(datetime.now(pytz.timezone(Countrydict[values])))
+         print(date)
+         year = int(date[0:4])
+         month = int(date[5:7])
+         day = int(date[8:10])
+         hour = int(date[11:13])
+         weekday = calendar.weekday(year, month, day)
+         if(weekday == 5 or weekday == 6 or (hour < OTime and hour > CTime)):
+             countryTZDict[values] = 'Close'
+         else:
+             countryTZDict[values] = 'Open'
 
-    # list = []
-    # day = []
-    # for x in Countrydict.values():
-    #     date = str(datetime.now(pytz.timezone(x)))
-    #     year = date[0:4]
-    #     month = date[5:7]
-    #     day = date[8:10]
-    #     hour = date[11:13]
-    #     weekday = calendar.weekday(year, month, day)
-    #     day.append(weekday)
-
-    return render(request, 'Market.html', {'forexs': forexs})
+    return render(request, 'Market.html', {'forexs': forexs, 'countryTZDict' : countryTZDict })
 
