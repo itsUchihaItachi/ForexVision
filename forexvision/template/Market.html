@@ -26,7 +26,15 @@
         <td>{{f.country_name}}</td>
         <td>{{f.open_time}}</td>
         <td>{{f.close_time}}</td>
-        <td>{{f.status}}</td>
+  
+        {% for key, value in countryTZDict.items %}
+       
+        {% if key == f.country_name %}
+        
+        <td>{{value}}</td>
+        
+        {% endif %}
+        {% endfor %}
 		</tr>
 	  {% endfor %}
 	</tbody>
