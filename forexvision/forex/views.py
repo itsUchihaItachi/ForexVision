@@ -208,9 +208,9 @@ def market(request):
             countryTZDict[values] = 'Close'
         else:
             if hour < OTime or hour > CTime:
-            countryTZDict[values] = 'Close'
+                countryTZDict[values] = 'Close'
             else:
-            countryTZDict[values] = 'Open'
+                countryTZDict[values] = 'Open'
 
     return render(request, 'Market.html', {'forexs': forexs, 'countryTZDict' : countryTZDict })
 
