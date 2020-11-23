@@ -7,6 +7,8 @@ import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 from .models import forex_hours
+from datetime import datetime
+import pytz
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
 API_KEY1 = "meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV"
@@ -36,7 +38,7 @@ def home(request):
 
         # # Check if the base and counter is not none
         # # After requesting the server and getting data from user
-        json_url = urlopen("https://fcsapi.com/api-v2/forex/converter?pair1="+base+"&pair2="+counter+"&amount="+amount+"&access_key="+API_KEY)
+        json_url = urlopen("https://fcsapi.com/api-v2/forex/converter?pair1="+base+"&pair2="+counter+"&amount="+amount+"&access_key="+API_KEY4)
         data = json.loads(json_url.read())
         if(data['status'] == False):
             print("Wait for 1 min")
@@ -172,6 +174,36 @@ def W_chart(todayDate, fromDate):
         return W_fig
 
 def market(request):
+    # Countrydict = {
+    #         'Sydney, Australia' : 'Australia/Sydney',
+    #         'Tokyo, Japan' : 'Japan',
+    #         'Hong Kong, China' : 'Asia/Hong_Kong',
+    #         'Shanghai, China' : 'Asia/Shanghai',
+    #         'Singapore, Singapore' : 'Asia/Singapore',
+    #         'India' : 'Asia/Kolkata',
+    #         'Moscow, Russia' : 'Europe/Moscow',
+    #         'Frankfurt, Germany' : 'Europe/Zurich',
+    #         'Zurich, Switzerland' : 'Europe/Zurich',
+    #         'Paris, France' : 'Europe/Paris',
+    #         'London, United Kingdom' : 'Europe/London',
+    #         'Johannesburg, South Africa' : 'Africa/Johannesburg',
+    #         'New York, United States' : 'America/New_York',
+    #         'Toronto, Canada' : 'America/Toronto',
+    #         'Chicago, United States' : 'America/Chicago'}
     forexs = forex_hours.objects.all()
+    # c_name = forex_hours.objects.get(name=country_name)
+    # print(c_name)
+
+    # list = []
+    # day = []
+    # for x in Countrydict.values():
+    #     date = str(datetime.now(pytz.timezone(x)))
+    #     year = date[0:4]
+    #     month = date[5:7]
+    #     day = date[8:10]
+    #     hour = date[11:13]
+    #     weekday = calendar.weekday(year, month, day)
+    #     day.append(weekday)
+
     return render(request, 'Market.html', {'forexs': forexs})
 
