@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from urllib.request import urlopen
 import json
-from datetime import date,timedelta
+from datetime import date, timedelta
 import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
+from .models import Trader, Spread
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
 API_KEY1 = "meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV"
@@ -21,21 +22,64 @@ API_KEY4 = "Dhd5RG5RAU7CXMJTaTqhAh"
 base, counter = 0, 0
 
 # Create your views here.
+
+
 def temp(request):
-    return render(request,'Base.html')
+
+    # if request.method=="POST":
+    # if request.POST.get('region'):
+    #         radio=request.POST.get('region')
+    #         print(radio)#radio should be like colm name
+    #         trader = Trader.objects.filter(region =radio)
+    #         print(trader)
+    #         return render(request,'Base.html',{'trader':trader})
+    if request.POST.get('compare'):
+        value = 'INRAUD'  # value given by base n counter string concatenation
+        check_list = []
+        check_list = request.POST.getlist('check[]')
+        print("list :", check_list)
+        trader = Trader.objects.filter(id__in =check_list)
+        spread = Spread.objects.filter(id__in =check_list)
+        print(trader)
+        # trader = Trader.objects.all()
+        # spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
+
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i]['INRAUD']
+        return render(request, 'Base.html', {'trader': ans})
+    else:
+        trader = Trader.objects.all()
+        spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
+
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i]['INRAUD']
+
+        print(ans)
+
+        return render(request, 'Base.html', {'trader': ans})
+
 
 def home(request):
     amount = request.POST.get('amount')
 
     global base
-    base = request.POST.get('baseCurr') # get the base currency symbol from user
+    # get the base currency symbol from user
+    base = request.POST.get('baseCurr')
     global counter
-    counter = request.POST.get('counterCurr') # get the counter currency symbol from user
+    # get the counter currency symbol from user
+    counter = request.POST.get('counterCurr')
 
     # # Check if the base and counter is not none
     # # After requesting the server and getting data from user
 
-    json_url = urlopen("https://fcsapi.com/api-v2/forex/converter?pair1="+base+"&pair2="+counter+"&amount="+amount+"&access_key="+API_KEY)
+    json_url = urlopen("https://fcsapi.com/api-v2/forex/converter?pair1=" +
+                       base+"&pair2="+counter+"&amount="+amount+"&access_key="+API_KEY)
     data = json.loads(json_url.read())
 
     baseindex = "price_1x_"+base
@@ -47,17 +91,21 @@ def home(request):
 
     lastUpd = lastUpdated()
     flag = "show"
+    trader = Trader.objects.all()
 
-    context = {'totalAmount' : totalAmount,
-                'base' : base, 'counter' : counter,
-                'counterrate' : counterrate, 'baserate' : baserate,
-                'lastUpd' : lastUpd,
-                'flag' : flag
-              }
-    return render(request,'Base.html',context)
+    context = {'totalAmount': totalAmount,
+               'base': base, 'counter': counter,
+               'counterrate': counterrate, 'baserate': baserate,
+               'lastUpd': lastUpd,
+               'flag': flag,
+               'trader': trader
+               }
+    return render(request, 'Base.html', context)
+
 
 def lastUpdated():
-    json_url = urlopen("https://fcsapi.com/api-v3/forex/latest?symbol="+base+"/"+counter+"&access_key="+API_KEY1)
+    json_url = urlopen("https://fcsapi.com/api-v3/forex/latest?symbol=" +
+                       base+"/"+counter+"&access_key="+API_KEY1)
     data = json.loads(json_url.read())
 
     return data['response'][0]['tm']
@@ -66,10 +114,11 @@ def lastUpdated():
 def charts(request):
     today = date.today()
     todayDate = today.strftime("%Y-%m-%d")
-    fromDate = today - timedelta(days = 365)
+    fromDate = today - timedelta(days=365)
 
     # https://fcsapi.com/api-v2/forex/history?symbol=EUR/USD&period=1d&from=2020-05-01T12:00&to=2020-11-11T12:00&access_key=taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN
-    D_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=1d&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY2)
+    D_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter +
+                         "&period=1d&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY2)
     D_data = json.loads(D_json_url.read())
 
     dt = D_data['response']
@@ -90,20 +139,22 @@ def charts(request):
         count += 1
 
     D_fig = plot([Scatter(x=D_date, y=D_close,
-                        mode='lines', name='test',
-                        opacity=0.8, marker_color='blue')],
-               output_type='div')
+                          mode='lines', name='test',
+                          opacity=0.8, marker_color='blue')],
+                 output_type='div')
 
     D_High = max(D_high)
     D_Low = min(D_low)
 
     M_fig = M_chart(todayDate, fromDate)
     W_fig = W_chart(todayDate, fromDate)
-    return render(request,'Charts.html',{'D_fig' : D_fig, 'D_High' : D_High, 'D_Low' : D_Low,
-                          'M_fig' : M_fig, 'W_fig' : W_fig})
+    return render(request, 'Charts.html', {'D_fig': D_fig, 'D_High': D_High, 'D_Low': D_Low,
+                                           'M_fig': M_fig, 'W_fig': W_fig})
+
 
 def M_chart(todayDate, fromDate):
-    M_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=month&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY3)
+    M_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter +
+                         "&period=month&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY3)
     M_data = json.loads(M_json_url.read())
 
     dt = M_data['response']
@@ -116,14 +167,16 @@ def M_chart(todayDate, fromDate):
         M_date.append(ls['tm'][0:10])
 
     M_fig = plot([Scatter(x=M_date, y=M_close,
-                        mode='lines', name='test',
-                        opacity=0.8, marker_color='blue')],
-               output_type='div')
+                          mode='lines', name='test',
+                          opacity=0.8, marker_color='blue')],
+                 output_type='div')
 
     return M_fig
 
+
 def W_chart(todayDate, fromDate):
-    W_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=1w&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY4)
+    W_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter +
+                         "&period=1w&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY4)
     W_data = json.loads(W_json_url.read())
     dt = W_data['response']
 
@@ -135,9 +188,8 @@ def W_chart(todayDate, fromDate):
         W_date.append(ls['tm'][0:10])
 
     W_fig = plot([Scatter(x=W_date, y=W_close,
-                        mode='lines', name='test',
-                        opacity=0.8, marker_color='blue')],
-               output_type='div')
+                          mode='lines', name='test',
+                          opacity=0.8, marker_color='blue')],
+                 output_type='div')
 
     return W_fig
-
