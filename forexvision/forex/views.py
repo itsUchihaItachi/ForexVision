@@ -204,13 +204,20 @@ def market(request):
         day = int(date[8:10])
         hour = int(date[11:13])
         weekday = calendar.weekday(year, month, day)
+        lst = []
+        lst.append(date[0:19])
         if(weekday == 5 or weekday == 6):
-            countryTZDict[values] = 'Close'
+            lst.append('Close')
+            # countryTZDict[values] = 'Close'
         else:
             if hour < OTime or hour > CTime:
-                countryTZDict[values] = 'Close'
+                lst.append('Close')
+                # countryTZDict[values] = 'Close'
             else:
-                countryTZDict[values] = 'Open'
+                lst.append('Open')
+                # countryTZDict[values] = 'Open'
+        countryTZDict[values] = lst
+        print(countryTZDict[values])
 
     return render(request, 'Market.html', {'forexs': forexs, 'countryTZDict' : countryTZDict })
 

@@ -17,6 +17,7 @@
           <th>Country Name</th>
          <th>Open Time</th>
          <th>Close Time</th>
+         <th>Current Time</th>
          <th>Status</th>
 		</tr>
     </thead>
@@ -29,19 +30,17 @@
 
         {% for key, value in countryTZDict.items %}
 
-        {% if key == f.country_name %}
-
-        <td>{{value}}</td>
-
-        {% endif %}
+            {% if key == f.country_name %}
+                {% for v in value %}
+                    <td>{{v}}</td>
+                {%endfor%}
+            {% endif %}
         {% endfor %}
 		</tr>
 	  {% endfor %}
 	</tbody>
 </table>
-{{checkl}}
 
-</form>
 </div>
 </body>
 </html>
