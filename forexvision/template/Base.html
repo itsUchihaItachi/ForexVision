@@ -424,7 +424,137 @@
 
 {% endif %}
       <footer class="container-fluid text-center">
+        <!-- Table Starts -->
+    <div class="container">
+      <br><br>
+      <br><br>
+      <table class="table table-striped" id="table1">
+        <thead>
+          <tr align="right">
+            <form method="POST" name="form1"> {%csrf_token%}
+              <td colspan="11">
 
+                <select name="region" onchange="form1.submit()">
+                  <option disabled selected>Choose region</option>
+                  <option value="Asia" label="Asia"> Asia </option>
+                  <option value="US" label="US"> US </option>
+                </select>
+
+                <a class="btn btn-primary" href="/" role="button">Reset</a>
+            </form>
+          </tr>
+
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Region</th>
+            <!-- <th>minDeposit</th>
+            <th>bankTransfer</th>
+            <th>withdrawlFee</th>
+            <th>negBalProtection</th> -->
+            <th>rating</th>
+            <th>benefit</th>
+            <!-- <th>platformSup</th>
+            <th>accounts</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for t in trader %}
+          <tr>
+
+            <td>{{t.id}}</td>
+            <td>{{t.name}}</td>
+            <td>{{t.region}}</td>
+            <!-- <td>{{t.minDeposit}}</td>
+            <td>{{t.bankTransfer}}</td>
+            <td>{{t.withdrawlFee}}</td>
+            <td>{{t.negBalProtection}}</td> -->
+            <td>{{t.rating}}</td>
+            <td>{{t.benefit}}</td>
+            <!-- <td>{{t.platformSup}}</td>
+            <td>{{t.accounts}}</td> -->
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div> -->
+    <!-- Table Ends-->
+        <!-- Comparision Table starts -->
+        <div class="container">
+            <form method="POST" name="form1"> {%csrf_token%}
+              <table class="table table-striped" id="table1">
+                <thead>
+                  <tr align="right">
+                    <form method="POST">
+                      <td colspan="12">
+                        <input class="form-check-input" type="radio" name="radio" id="commissionRadio" value="com">
+                        <label class="form-check-label" for="commissionRadio">
+                          Commission
+                        </label>
+
+                        <input class="form-check-input" type="radio" name="radio" id="ratingRadio" value="rating">
+                        <label class="form-check-label" for="ratingRadio">
+                          Rating
+                        </label>
+
+                        <input class="form-check-input" type="radio" name="radio" id="resetRadio" value="id">
+                        <label class="form-check-label" for="ratingRadio">
+                          Reset
+                        </label>
+
+                        <button type="submit" class="btn btn-success" name="Apply" value="Apply">Apply</button>
+                      </td>
+                    </form>
+                  </tr>
+
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Region</th>
+                    <th>minDeposit</th>
+                    <th>bankTransfer</th>
+                    <th>withdrawlFee</th>
+                    <th>negBalProtection</th>
+                    <th>rating</th>
+                    <th>benefit</th>
+                    <th>platformSup</th>
+                    <th>accounts</th>
+                    <th>Commission</th>
+                    <th>Compare</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for t in trader %}
+
+                  <tr>
+                    <td>{{t.id}}</td>
+                    <td>{{t.name}}</td>
+                    <td>{{t.region}}</td>
+                    <td>{{t.minDeposit}}</td>
+                    <td>{{t.bankTransfer}}</td>
+                    <td>{{t.withdrawlFee}}</td>
+                    <td>{{t.negBalProtection}}</td>
+                    <td>{{t.rating}}</td>
+                    <td>{{t.benefit}}</td>
+                    <td>{{t.platformSup}}</td>
+                    <td>{{t.accounts}}</td>
+
+                    <td>{{t.spread}}</td> <!-- will have to passs the var used to take curr value -->
+
+                    <td><input type="checkbox" name="check[]" id={{t.id}} value={{t.id}} /></td>
+
+                  </tr>
+                  {% endfor %}
+
+                  <td colspan="12" align="right">
+                    <button type="submit" class="btn btn-success" name="compare" value="compare">compare</button>
+                  </td>
+
+                </tbody>
+              </table>
+            </form>
+          </div>
+          <!-- Comparision Table ends -->
       </footer>
 
 </body>

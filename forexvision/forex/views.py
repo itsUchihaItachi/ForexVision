@@ -6,10 +6,11 @@ from datetime import date,timedelta
 import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
-from .models import forex_hours
+from .models import forex_hours,Trader, Spread
 from datetime import datetime
 import pytz
 import calendar
+
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
 API_KEY1 = "meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV"
@@ -26,7 +27,16 @@ base, counter = 0, 0
 
 # Create your views here.
 def temp(request):
-    return render(request,'Base.html')
+    # if request.method=="POST":
+    if request.POST.get('region'):
+        radio=request.POST.get('region')
+        print(radio)#radio should be like colm name
+        trader = Trader.objects.filter(region =radio)
+        print(trader)
+        return render(request,'Base.html',{'trader':trader})
+    else:
+        trader = Trader.objects.all()
+        return render(request,'Base.html',{'trader':trader})
 
 def home(request):
     if request.method == 'POST':
@@ -63,23 +73,50 @@ def home(request):
             if(dataupd['status'] == False):
                 return render(request, 'Base.html', {'lastUpd' : None})
             else:
+                ans = abcd(request, base, counter)
                 context = {'totalAmount' : totalAmount,
                             'base' : base, 'counter' : counter,
                             'counterrate' : counterrate, 'baserate' : baserate,
                             'lastUpd' : dataupd['response'][0]['tm'],
-                            'flag' : flag
-                        }
+                            'flag' : flag, 'trader' : ans
+                         }
+
                 return render(request,'Base.html',context)
 
-# def lastUpdated():
+def abcd(request, base, counter):
+    if request.POST.get('compare'):
+        value = base+counter  # value given by base n counter string concatenation
+        check_list = []
+        check_list = request.POST.getlist('check[]')
+        print("list :", check_list)
+        trader = Trader.objects.filter(id__in =check_list)
+        spread = Spread.objects.filter(id__in =check_list)
+        print(trader)
+        # trader = Trader.objects.all()
+        # spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
 
-#     json_url = urlopen("https://fcsapi.com/api-v3/forex/latest?symbol="+base+"/"+counter+"&access_key="+API_KEY1)
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i][value]
 
-#     data = json.loads(json_url.read())
-#     if(data['status'] == False):
-#         return data['status']
-#     else:
-#         return data['response'][0]['tm']
+        return ans
+        # return render(request, 'Base.html', {'trader': ans})
+    else:
+        trader = Trader.objects.all()
+        spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
+
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i][currency]
+
+        print(ans)
+
+        return ans
+        # return render(request, 'Base.html', {'trader': ans})
 
 
 def charts(request):
