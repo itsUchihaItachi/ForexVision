@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from urllib.request import urlopen
 import json
-from datetime import date,timedelta
+from datetime import date, timedelta
 import pandas as pd
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
-from .models import forex_hours,Trader, Spread
+from .models import forex_hours, Trader, Spread
 from datetime import datetime
 import pytz
 import calendar
@@ -26,26 +26,33 @@ API_KEY4 = "Dhd5RG5RAU7CXMJTaTqhAh"
 base, counter = 0, 0
 
 # Create your views here.
+
+
 def temp(request):
-    # if request.method=="POST":
-    if request.POST.get('region'):
-        radio=request.POST.get('region')
-        print(radio)#radio should be like colm name
-        trader = Trader.objects.filter(region =radio)
-        print(trader)
-        return render(request,'Base.html',{'trader':trader})
+    if request.method == "POST":
+        print("Post print")
+        if request.POST.get('region'):
+            radio = request.POST.get('region')
+            print(radio)  # radio should be like colm name
+            trader = Trader.objects.filter(region=radio)
+            return render(request, 'Base.html', {'trader': trader})
+
     else:
         trader = Trader.objects.all()
-        return render(request,'Base.html',{'trader':trader})
+        print("outer else print")
+        return render(request, 'Base.html', {'trader': trader})
+
 
 def home(request):
     if request.method == 'POST':
         amount = request.POST.get('amount')
 
         global base
-        base = request.POST.get('baseCurr') # get the base currency symbol from user
+        # get the base currency symbol from user
+        base = request.POST.get('baseCurr')
         global counter
-        counter = request.POST.get('counterCurr') # get the counter currency symbol from user
+        # get the counter currency symbol from user
+        counter = request.POST.get('counterCurr')
 
         # # Check if the base and counter is not none
         # # After requesting the server and getting data from user
@@ -71,26 +78,62 @@ def home(request):
 
             dataupd = json.loads(json_urlupd.read())
             if(dataupd['status'] == False):
-                return render(request, 'Base.html', {'lastUpd' : None})
+                return render(request, 'Base.html', {'lastUpd': None})
             else:
-                ans = abcd(request, base, counter)
-                context = {'totalAmount' : totalAmount,
-                            'base' : base, 'counter' : counter,
-                            'counterrate' : counterrate, 'baserate' : baserate,
-                            'lastUpd' : dataupd['response'][0]['tm'],
-                            'flag' : flag, 'trader' : ans
-                         }
+                ans = CompareTable(request, base, counter)
+                context = {'totalAmount': totalAmount,
+                           'base': base, 'counter': counter,
+                           'counterrate': counterrate, 'baserate': baserate,
+                           'lastUpd': dataupd['response'][0]['tm'],
+                           'flag': flag, 'trader': ans
+                           }
 
-                return render(request,'Base.html',context)
+                return render(request, 'Base.html', context)
 
-def abcd(request, base, counter):
+def compareBtn(request):
+    if request.POST.get('compare'):
+        print("compare request")
+        value = base+counter  # value given by base n counter string concatenation
+        check_list = []
+        check_list = request.POST.getlist('check[]')
+        print("list :", check_list)
+        trader = Trader.objects.filter(id__in=check_list)
+        spread = Spread.objects.filter(id__in=check_list)
+        print(trader)
+        # trader = Trader.objects.all()
+        # spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
+
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i][value]
+
+        # return ans
+        return render(request, 'CompareTraders.html', {'trader': ans})
+    else:
+        trader = Trader.objects.all()
+        spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
+
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i][currency]
+
+        print(ans)
+
+        # return ans
+        return render(request, 'Base.html', {'trader': ans})
+
+def CompareTable(request, base, counter):
     if request.POST.get('compare'):
         value = base+counter  # value given by base n counter string concatenation
         check_list = []
         check_list = request.POST.getlist('check[]')
         print("list :", check_list)
-        trader = Trader.objects.filter(id__in =check_list)
-        spread = Spread.objects.filter(id__in =check_list)
+        trader = Trader.objects.filter(id__in=check_list)
+        spread = Spread.objects.filter(id__in=check_list)
         print(trader)
         # trader = Trader.objects.all()
         # spread = Spread.objects.all()
@@ -119,10 +162,12 @@ def abcd(request, base, counter):
         # return render(request, 'Base.html', {'trader': ans})
 
 
+
+
 def charts(request):
     today = date.today()
     todayDate = today.strftime("%Y-%m-%d")
-    fromDate = today - timedelta(days = 365)
+    fromDate = today - timedelta(days=365)
 
     # https://fcsapi.com/api-v2/forex/history?symbol=EUR/USD&period=1d&from=2020-05-01T12:00&to=2020-11-11T12:00&access_key=taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN
     D_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=1d&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY2)
@@ -132,7 +177,7 @@ def charts(request):
     W_fig = W_chart(todayDate, fromDate)
 
     if D_data['status'] == False or M_fig == 'status failed' or W_fig == 'status failed':
-        return render(request,'Base.html')
+        return render(request, 'Base.html')
     else:
         dt = D_data['response']
 
@@ -151,16 +196,17 @@ def charts(request):
             count += 1
 
         D_fig = plot([Scatter(x=D_date, y=D_close,
-                            # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
-                            mode='lines+markers', name='test',
-                            opacity=0.8, marker_color='blue')],
-                output_type='div')
+                              # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
+                              mode='lines+markers', name='test',
+                              opacity=0.8, marker_color='blue')],
+                     output_type='div')
 
         D_High = max(D_high)
         D_Low = min(D_low)
 
-        return render(request,'Charts.html',{'base' : base, 'counter' : counter, 'D_fig' : D_fig, 'D_High' : D_High, 'D_Low' : D_Low,
-                            'M_fig' : M_fig, 'W_fig' : W_fig})
+        return render(request, 'Charts.html', {'base': base, 'counter': counter, 'D_fig': D_fig, 'D_High': D_High, 'D_Low': D_Low,
+                                               'M_fig': M_fig, 'W_fig': W_fig})
+
 
 def M_chart(todayDate, fromDate):
     M_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=month&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY3)
@@ -178,14 +224,14 @@ def M_chart(todayDate, fromDate):
             M_close.append(ls['c'])
             M_date.append(ls['tm'][0:10])
 
-
         M_fig = plot([Scatter(x=M_date, y=M_close,
-                            # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
-                            mode='lines+markers', name='test',
-                            opacity=0.8, marker_color='blue')],
-                output_type='div')
+                              # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
+                              mode='lines+markers', name='test',
+                              opacity=0.8, marker_color='blue')],
+                     output_type='div')
 
         return M_fig
+
 
 def W_chart(todayDate, fromDate):
     W_json_url = urlopen("https://fcsapi.com/api-v2/forex/history?symbol="+base+"/"+counter+"&period=1w&from="+str(fromDate)+"T12:00&to="+todayDate+"T12:00&access_key="+API_KEY4)
@@ -204,36 +250,39 @@ def W_chart(todayDate, fromDate):
             W_date.append(ls['tm'][0:10])
 
         W_fig = plot([Scatter(x=W_date, y=W_close,
-                            # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
-                            mode='lines+markers', name='test',
-                            opacity=0.8, marker_color='blue')],
-                output_type='div')
+                              # labels = {'x' : 'Time Stamp', 'y' : 'Counter Currency Range'},
+                              mode='lines+markers', name='test',
+                              opacity=0.8, marker_color='blue')],
+                     output_type='div')
 
         return W_fig
 
+
 def market(request):
     Countrydict = {
-            'Sydney, Australia' : 'Australia/Sydney',
-            'Tokyo, Japan' : 'Japan',
-            'Hong Kong, China' : 'Asia/Hong_Kong',
-            'Shanghai, China' : 'Asia/Shanghai',
-            'Singapore, Singapore' : 'Asia/Singapore',
-            'India' : 'Asia/Kolkata',
-            'Moscow, Russia' : 'Europe/Moscow',
-            'Frankfurt, Germany' : 'Europe/Zurich',
-            'Zurich, Switzerland' : 'Europe/Zurich',
-            'Paris, France' : 'Europe/Paris',
-            'London, United Kingdom' : 'Europe/London',
-            'Johannesburg, South Africa' : 'Africa/Johannesburg',
-            'New York, United States' : 'America/New_York',
-            'Toronto, Canada' : 'America/Toronto',
-            'Chicago, United States' : 'America/Chicago'}
+        'Sydney, Australia': 'Australia/Sydney',
+        'Tokyo, Japan': 'Japan',
+        'Hong Kong, China': 'Asia/Hong_Kong',
+        'Shanghai, China': 'Asia/Shanghai',
+        'Singapore, Singapore': 'Asia/Singapore',
+        'India': 'Asia/Kolkata',
+        'Moscow, Russia': 'Europe/Moscow',
+        'Frankfurt, Germany': 'Europe/Zurich',
+        'Zurich, Switzerland': 'Europe/Zurich',
+        'Paris, France': 'Europe/Paris',
+        'London, United Kingdom': 'Europe/London',
+        'Johannesburg, South Africa': 'Africa/Johannesburg',
+        'New York, United States': 'America/New_York',
+        'Toronto, Canada': 'America/Toronto',
+        'Chicago, United States': 'America/Chicago'}
     forexs = forex_hours.objects.all()
 
     countryTZDict = {}
     for i in range(len(forexs)):
-        OTime = int(forex_hours.objects.values('open_time')[i]['open_time'][0:2])
-        CTime = int(forex_hours.objects.values('close_time')[i]['close_time'][0:2])
+        OTime = int(forex_hours.objects.values(
+            'open_time')[i]['open_time'][0:2])
+        CTime = int(forex_hours.objects.values(
+            'close_time')[i]['close_time'][0:2])
         values = forex_hours.objects.values('country_name')[i]['country_name']
         date = str(datetime.now(pytz.timezone(Countrydict[values])))
         year = int(date[0:4])
@@ -256,5 +305,4 @@ def market(request):
         countryTZDict[values] = lst
         print(countryTZDict[values])
 
-    return render(request, 'Market.html', {'forexs': forexs, 'countryTZDict' : countryTZDict })
-
+    return render(request, 'Market.html', {'forexs': forexs, 'countryTZDict': countryTZDict})

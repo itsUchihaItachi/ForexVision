@@ -425,7 +425,9 @@
 {% endif %}
       <footer class="container-fluid text-center">
         <!-- Table Starts -->
-    <div class="container">
+    {% if flag == "show" %}
+    {%else%}
+    <div class="container" style = "display: 'none';">
       <br><br>
       <br><br>
       <table class="table table-striped" id="table1">
@@ -440,12 +442,14 @@
                   <option value="US" label="US"> US </option>
                 </select>
 
+
                 <a class="btn btn-primary" href="/" role="button">Reset</a>
+            </td>
             </form>
           </tr>
 
           <tr>
-            <th>ID</th>
+            <!-- <th>ID</th> -->
             <th>Name</th>
             <th>Region</th>
             <!-- <th>minDeposit</th>
@@ -462,7 +466,7 @@
           {% for t in trader %}
           <tr>
 
-            <td>{{t.id}}</td>
+            <!-- <td>{{t.id}}</td> -->
             <td>{{t.name}}</td>
             <td>{{t.region}}</td>
             <!-- <td>{{t.minDeposit}}</td>
@@ -477,34 +481,18 @@
           {% endfor %}
         </tbody>
       </table>
-    </div> -->
+    </div>
+    {% endif %}
     <!-- Table Ends-->
+
+
         <!-- Comparision Table starts -->
-        <div class="container">
-            <form method="POST" name="form1"> {%csrf_token%}
+        {% if flag == "show"%}
+        <div class="container" style="display: '';">
+            <form method="POST" action="CompareTraders" name="form2" > {%csrf_token%}
               <table class="table table-striped" id="table1">
                 <thead>
                   <tr align="right">
-                    <form method="POST">
-                      <td colspan="12">
-                        <input class="form-check-input" type="radio" name="radio" id="commissionRadio" value="com">
-                        <label class="form-check-label" for="commissionRadio">
-                          Commission
-                        </label>
-
-                        <input class="form-check-input" type="radio" name="radio" id="ratingRadio" value="rating">
-                        <label class="form-check-label" for="ratingRadio">
-                          Rating
-                        </label>
-
-                        <input class="form-check-input" type="radio" name="radio" id="resetRadio" value="id">
-                        <label class="form-check-label" for="ratingRadio">
-                          Reset
-                        </label>
-
-                        <button type="submit" class="btn btn-success" name="Apply" value="Apply">Apply</button>
-                      </td>
-                    </form>
                   </tr>
 
                   <tr>
@@ -554,6 +542,7 @@
               </table>
             </form>
           </div>
+        {% endif %}
           <!-- Comparision Table ends -->
       </footer>
 
