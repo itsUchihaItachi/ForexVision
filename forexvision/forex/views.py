@@ -36,6 +36,7 @@ def temp(request):
             print(radio)  # radio should be like colm name
             trader = Trader.objects.filter(region=radio)
             return render(request, 'Base.html', {'trader': trader})
+
     else:
         trader = Trader.objects.all()
         print("outer else print")
@@ -79,7 +80,7 @@ def home(request):
             if(dataupd['status'] == False):
                 return render(request, 'Base.html', {'lastUpd': None})
             else:
-                ans = abcd(request, base, counter)
+                ans = CompareTable(request, base, counter)
                 context = {'totalAmount': totalAmount,
                            'base': base, 'counter': counter,
                            'counterrate': counterrate, 'baserate': baserate,
@@ -89,8 +90,43 @@ def home(request):
 
                 return render(request, 'Base.html', context)
 
+def compareBtn(request):
+    if request.POST.get('compare'):
+        print("compare request")
+        value = base+counter  # value given by base n counter string concatenation
+        check_list = []
+        check_list = request.POST.getlist('check[]')
+        print("list :", check_list)
+        trader = Trader.objects.filter(id__in=check_list)
+        spread = Spread.objects.filter(id__in=check_list)
+        print(trader)
+        # trader = Trader.objects.all()
+        # spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
 
-def abcd(request, base, counter):
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i][value]
+
+        # return ans
+        return render(request, 'CompareTraders.html', {'trader': ans})
+    else:
+        trader = Trader.objects.all()
+        spread = Spread.objects.all()
+        ans = list(trader.values())
+        ans1 = list(spread.values())
+        currency = base+counter
+
+        for i in range(len(ans)):
+            ans[i]["spread"] = ans1[i][currency]
+
+        print(ans)
+
+        # return ans
+        return render(request, 'Base.html', {'trader': ans})
+
+def CompareTable(request, base, counter):
     if request.POST.get('compare'):
         value = base+counter  # value given by base n counter string concatenation
         check_list = []
@@ -124,6 +160,8 @@ def abcd(request, base, counter):
 
         return ans
         # return render(request, 'Base.html', {'trader': ans})
+
+
 
 
 def charts(request):
