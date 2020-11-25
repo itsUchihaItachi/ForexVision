@@ -44,48 +44,17 @@
           <tr align="right">
           </tr>
 
-          <tr>
-            <!-- <th>ID</th> -->
-            <th>Name</th>
-            <th>Region</th>
-            <th>minDeposit</th>
-            <th>bankTransfer</th>
-            <th>withdrawlFee</th>
-            <th>negBalProtection</th>
-            <th>rating</th>
-            <th>benefit</th>
-            <th>platformSup</th>
-            <th>accounts</th>
-            <th>Commission</th>
-            <!-- <th>Compare</th> -->
-          </tr>
         </thead>
         <tbody>
-          {% for t in trader %}
+            {% for key , value in trader.items%}
 
-          <tr>
-            <!-- <td>{{t.id}}</td> -->
-            <td>{{t.name}}</td>
-            <td>{{t.region}}</td>
-            <td>{{t.minDeposit}}</td>
-            <td>{{t.bankTransfer}}</td>
-            <td>{{t.withdrawlFee}}</td>
-            <td>{{t.negBalProtection}}</td>
-            <td>{{t.rating}}</td>
-            <td>{{t.benefit}}</td>
-            <td>{{t.platformSup}}</td>
-            <td>{{t.accounts}}</td>
-
-            <td>{{t.spread}}</td> <!-- will have to passs the var used to take curr value -->
-
-            <!-- <td><input type="checkbox" name="check[]" id={{t.id}} value={{t.id}} /></td> -->
-
-          </tr>
-          {% endfor %}
-
-          <!-- <td colspan="12" align="right">
-            <button type="submit" class="btn btn-success" name="compare" value="compare">compare</button>
-          </td> -->
+             <tr>
+              <td>{{key}}</td>
+              {% for i in value%}
+                <td>{{i}}</td>
+              {% endfor %}
+             </tr>
+            {% endfor %}
 
         </tbody>
       </table>

@@ -92,14 +92,12 @@ def home(request):
 
 def compareBtn(request):
     if request.POST.get('compare'):
-        print("compare request")
         value = base+counter  # value given by base n counter string concatenation
         check_list = []
         check_list = request.POST.getlist('check[]')
         print("list :", check_list)
         trader = Trader.objects.filter(id__in=check_list)
         spread = Spread.objects.filter(id__in=check_list)
-        print(trader)
         # trader = Trader.objects.all()
         # spread = Spread.objects.all()
         ans = list(trader.values())
@@ -109,8 +107,16 @@ def compareBtn(request):
         for i in range(len(ans)):
             ans[i]["spread"] = ans1[i][value]
 
-        # return ans
-        return render(request, 'CompareTraders.html', {'trader': ans})
+        valuelist = []
+        dicts = {}
+        for key in ans[0]:
+            for i in range(len(ans)):
+                valuelist.append(ans[i][key])
+                dicts[key] = valuelist
+
+            valuelist = []
+
+        return render(request, 'CompareTraders.html', {'trader': dicts})
     else:
         trader = Trader.objects.all()
         spread = Spread.objects.all()
@@ -121,9 +127,6 @@ def compareBtn(request):
         for i in range(len(ans)):
             ans[i]["spread"] = ans1[i][currency]
 
-        print(ans)
-
-        # return ans
         return render(request, 'Base.html', {'trader': ans})
 
 def CompareTable(request, base, counter):
