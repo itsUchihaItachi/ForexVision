@@ -1,19 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Forex Market Hours</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript"
+      src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+
 </head>
 <body>
-<div class="container">
+<div class="card">
 <br><br>
 
-<table class="table table-striped">
+<table class="table table-striped" id="table1">
     <thead>
-      <tr>
+      <tr class="tabelhead">
           <th>Country Name</th>
          <th>Open Time</th>
          <th>Close Time</th>
@@ -23,7 +37,7 @@
     </thead>
     <tbody>
 	{% for f in forexs %}
-      <tr>
+      <tr >
         <td>{{f.country_name}}</td>
         <td>{{f.open_time}}</td>
         <td>{{f.close_time}}</td>
@@ -42,5 +56,22 @@
 </table>
 
 </div>
+<script>
+    $(document).ready(function () {
+        $('#table1').DataTable({
+
+            responsive: true,
+            language: {
+                //customize pagination prev and next buttons: use arrows instead of words
+                'paginate': {
+                    'previous': '<span class="fa fa-chevron-left"></span>',
+                    'next': '<span class="fa fa-chevron-right"></span>'
+                },
+
+            }
+        })
+
+    });
+</script>
 </body>
 </html>

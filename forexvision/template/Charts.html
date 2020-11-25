@@ -1,5 +1,7 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,37 +13,43 @@
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
+    <!-- <nav class="navbar navbar-inverse">
         <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/">Forex Vision</a>
-          </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Forex Vision</a>
+            </div>
         </div>
-      </nav>
-    <div class = "jumbotron" style="margin: 50px; padding : 10px 10px 10px 10px;">
-    <h1>Base Currency : {{base}} || Counter Currency :  {{counter}}</h1>
-    <H3> Last 30 days High : {{D_High}} </H3>
-    <H3> Last 30 days Low : {{D_Low}} </H3><br>
+    </nav> -->
     <div>
-        <h1 id = "chart_heading"> Daily Analysis </h1>
-        <div id = "D_div" style="width: 50%;">
-            {{D_fig | safe}}<br>
-        </div>
-        <div id = "W_div" style = "display : none; width : 50%;" >
-            {{W_fig | safe}}<br>
-        </div>
-        <div id = "M_div" style = "display : none; width : 50%;">
-            {{M_fig | safe}}<br>
-        </div>
-    </div>
-    <button type = "button" id = "weekly"  onclick="myFunction();"> Show Weekly Analysis</button>
-    <button type = "button" id = "monthly"  onclick=" myFunction();"> Show Monthly Analysis</button>
-    <button type = "button" id = "daily" onclick="myFunction();"> Show Daily Analysis</button>
+        <img alt="logo" src="{% static 'logo.svg' %}" class="shrinklogo">
 
-</div>
+    </div>
+    <div style="padding : 10px 10px 10px 10px;">
+        <h1 class="desc">Base Currency : {{base}} || Counter Currency : {{counter}}</h1>
+        <H3 style="color: #fff;"> Last 30 days High : {{D_High}} </H3>
+        <H3 style="color: #fff;"> Last 30 days Low : {{D_Low}} </H3><br>
+        <div>
+            <h1 id="chart_heading" class="desc"> Daily Analysis </h1>
+            <div id="D_div" style="width: 50%;">
+                {{D_fig | safe}}<br>
+            </div>
+            <div id="W_div" style="display : none; width : 50%;">
+                {{W_fig | safe}}<br>
+            </div>
+            <div id="M_div" style="display : none; width : 50%;">
+                {{M_fig | safe}}<br>
+            </div>
+        </div>
+        <button type="button" id="weekly" onclick="myFunction();"> Show Weekly Analysis</button>
+        <button type="button" id="monthly" onclick=" myFunction();"> Show Monthly Analysis</button>
+        <button type="button" id="daily" onclick="myFunction();"> Show Daily Analysis</button>
+
+    </div>
 </body>
 <script>
     function myFunction() {
@@ -52,24 +60,24 @@
         var y = document.getElementById("W_div");
         var z = document.getElementById("M_div");
         if (id == "weekly") {
-          ch_head.innerHTML = "Weekly Analysis";
-          y.style.display = "block";
-          x.style.display = "none";
-          z.style.display = "none";
+            ch_head.innerHTML = "Weekly Analysis";
+            y.style.display = "block";
+            x.style.display = "none";
+            z.style.display = "none";
         }
-        else if(id == "monthly")
-        {
-            ch_head.innerHTML="Monthly Analysis";
+        else if (id == "monthly") {
+            ch_head.innerHTML = "Monthly Analysis";
             y.style.display = "none";
             x.style.display = "none";
             z.style.display = "block";
         }
-        else{
+        else {
             ch_head.innerHTML = "Daily Analysis";
             y.style.display = "none";
             x.style.display = "block";
             z.style.display = "none";
         }
-      }
+    }
 </script>
+
 </html>
