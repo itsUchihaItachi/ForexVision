@@ -30,9 +30,9 @@
 
     </div>
     <div style="padding : 10px 10px 10px 10px;">
-        <h1 class="desc">Base Currency : {{base}} || Counter Currency : {{counter}}</h1>
-        <H3 style="color: #fff;"> Last 30 days High : {{D_High}} </H3>
-        <H3 style="color: #fff;"> Last 30 days Low : {{D_Low}} </H3><br>
+        <h1 class="desc">From  {{base}}  To  {{counter}} Chart Analysis</h1>
+        <H3 style="color: #fff;"> Last 30 days High of {{counter}} : {{D_High}} </H3>
+        <H3 style="color: #fff;"> Last 30 days Low of {{counter}}: {{D_Low}} </H3><br>
         <div>
             <h1 id="chart_heading" class="desc"> Daily Analysis </h1>
            <div style="display: flex;">
@@ -48,10 +48,21 @@
                 </div>
                </div>
                <div>
-<h4>Dummy</h4>
+                   <ul>
+                    <H3 style="color: #fff;">
+                   <li> Daily analysis shows the daily rates of currencies for the past one year. </li> <br><br>
+
+                   <li> Week analysis :
+                    Data plotted shows 52 week points on X axis aganist the Y axis which shows the counter currency rates. </li><br><br>
+
+                  <li> Monthly analysis :
+                    Data plotted shows 12 month points on X axis aganist the Y axis which shows the counter currency rates. </li>
+
+                    </H3>
+                </ul>
                </div>
            </div>
-           
+
         </div>
         <button type="button" id="weekly" class="chartbtn" onclick="myFunction();"> Show Weekly Analysis</button>
         <button type="button" id="monthly"  class="chartbtn" onclick=" myFunction();"> Show Monthly Analysis</button>

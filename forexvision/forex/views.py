@@ -10,6 +10,7 @@ from .models import forex_hours, Trader, Spread
 from datetime import datetime
 import pytz
 import calendar
+import random
 
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
@@ -23,7 +24,7 @@ API_KEY4 = "Dhd5RG5RAU7CXMJTaTqhAh"
 # vishal2 = R5jC9C67BMmAwkbGK5rtsY
 # sanket = Dhd5RG5RAU7CXMJTaTqhAh
 
-base, counter = 0, 0
+base, counter,TA = 0, 0, 0
 
 # Create your views here.
 
@@ -31,10 +32,10 @@ base, counter = 0, 0
 def temp(request):
     if request.method == "POST":
         print("Post print")
-        if request.POST.get('region'):
-            radio = request.POST.get('region')
+        if request.POST.get('Region'):
+            radio = request.POST.get('Region')
             print(radio)  # radio should be like colm name
-            trader = Trader.objects.filter(region=radio)
+            trader = Trader.objects.filter(Region=radio)
             return render(request, 'Base.html', {'trader': trader})
 
     else:
@@ -46,7 +47,7 @@ def temp(request):
 def home(request):
     if request.method == 'POST':
         amount = request.POST.get('amount')
-
+        global TA
         global base
         # get the base currency symbol from user
         base = request.POST.get('baseCurr')
@@ -67,8 +68,8 @@ def home(request):
 
             baserate = data['response'][baseindex]
             counterrate = data['response'][counterindex]
-            totalAmount = data['response']['total']
-
+            totalAmount = float(data['response']['total'])
+            TA = totalAmount
             # lastUpd = lastUpdated()
             flag = "show"
 
@@ -80,7 +81,7 @@ def home(request):
             if(dataupd['status'] == False):
                 return render(request, 'Base.html', {'lastUpd': None})
             else:
-                ans = CompareTable(request, base, counter)
+                ans = CompareTable(request, base, counter, totalAmount)
                 context = {'totalAmount': totalAmount,
                            'base': base, 'counter': counter,
                            'counterrate': counterrate, 'baserate': baserate,
@@ -105,7 +106,8 @@ def compareBtn(request):
         currency = base+counter
 
         for i in range(len(ans)):
-            ans[i]["spread"] = ans1[i][value]
+            # ans[i]["spread"] = ans1[i][value]
+            ans[i]["spread"] = round(TA + (TA * round(random.random(), 2)), 2)
 
         valuelist = []
         dicts = {}
@@ -125,11 +127,12 @@ def compareBtn(request):
         currency = base+counter
 
         for i in range(len(ans)):
-            ans[i]["spread"] = ans1[i][currency]
+            # ans[i]["spread"] = ans1[i][currency]
+            ans[i]["spread"] = round(TA + (TA * round(random.random(), 2)), 2)
 
         return render(request, 'Base.html', {'trader': ans})
 
-def CompareTable(request, base, counter):
+def CompareTable(request, base, counter, totalAmount):
     if request.POST.get('compare'):
         value = base+counter  # value given by base n counter string concatenation
         check_list = []
@@ -145,7 +148,8 @@ def CompareTable(request, base, counter):
         currency = base+counter
 
         for i in range(len(ans)):
-            ans[i]["spread"] = ans1[i][value]
+            # ans[i]["spread"] = ans1[i][value]
+            ans[i]["spread"] = round(totalAmount + (totalAmount * round(random.random(), 2)), 2)
 
         return ans
         # return render(request, 'Base.html', {'trader': ans})
@@ -157,7 +161,8 @@ def CompareTable(request, base, counter):
         currency = base+counter
 
         for i in range(len(ans)):
-            ans[i]["spread"] = ans1[i][currency]
+            # ans[i]["spread"] = ans1[i][currency]
+            ans[i]["spread"] = round(totalAmount + (totalAmount * round(random.random(), 2)), 2)
 
         print(ans)
 

@@ -7,16 +7,16 @@ class forex_hours(models.Model):
     close_time = models.TextField()
 
 class Trader(models.Model):
-    name = models.CharField(max_length=200)
-    region = models.CharField(max_length=200)
-    minDeposit = models.IntegerField()
-    bankTransfer =models.CharField(max_length=20)
-    withdrawlFee = models.CharField(max_length=20)
-    negBalProtection = models.CharField(max_length=20)
-    rating = models.IntegerField()
-    benefit = models.CharField(max_length=200)
-    platformSup = models.CharField(max_length=200)
-    accounts = models.CharField(max_length=200)
+    Name = models.CharField(max_length=200)
+    Region = models.CharField(max_length=200)
+    Minimum_Deposit = models.IntegerField()
+    Bank_Transfer =models.CharField(max_length=20)
+    Withdrawl_Fee = models.CharField(max_length=20)
+    Neg_Bal_Protection = models.CharField(max_length=20)
+    Rating = models.IntegerField()
+    Benefits = models.CharField(max_length=200)
+    Platform_Setup = models.CharField(max_length=200)
+    Accounts = models.CharField(max_length=200)
 
 class Spread(models.Model):
     trader =models.ForeignKey(Trader, on_delete=models.CASCADE)
