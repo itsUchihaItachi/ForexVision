@@ -44,17 +44,17 @@
     </div>
     <div class="card">
         <table class="table  table-striped" id="table1" style="width: 100%;">
-            <thead>
+            <!-- <thead>
                 <tr class="tabelhead">
                     <th class="col">First</th>
                     <th class="col">Second</th>
                 </tr>
-            </thead>
+            </thead> -->
             <tbody>
                 {% for key , value in trader.items%}
 
                 <tr>
-                    <td>{{key}}</td>
+                    <td class="tabelhead">{{key}}</td>
                     {% for i in value%}
                     <td>{{i}}</td>
                     {% endfor %}
@@ -74,6 +74,10 @@
     <script>
         $(document).ready(function () {
             $('#table1').DataTable({
+                "columnDefs": [
+                { "width": "30%", "targets": 0 ,
+                  "width": "20%", "targets": 1 },
+            ],
 
                 responsive: true,
                 language: {

@@ -63,14 +63,14 @@
             <div class="row">
                 {% csrf_token %}
 
-                <div class="col-xl-5 col-md-5 col-lg-5 col-sm-12">
+                <div class="col-xl-3 col-md-3 col-lg-3 col-sm-12">
                     <div class="form-group" id="UserAmount">
                         <label for="amt">I have</label>
                         <input type="number" min="1" name="amount" value="{{ request.POST.amount}}" class="form-control"
                             id="amt" placeholder="Enter Amount">
                     </div>
                 </div>
-                <div class="col-xl-5 col-md-5 col-lg-5 col-sm-12 align-center">
+                <div class="col-xl-7 col-md-7 col-lg-7 col-sm-12 align-center">
                     <div class="form-group w-45" id="UserBaseCurr">
                         <label for="currencyListBase">in</label>
                         <select name="baseCurr" class="form-control" value="{{ request.POST.baseCurr}}"
@@ -80,146 +80,15 @@
                             <option value="EUR" {% if base == "EUR" %}selected{%endif%} label="Euro">EUR</option>
                             <option value="JPY" {% if base == "JPY" %}selected{%endif%} label="Japanese yen">JPY
                             </option>
-                            <option value="GBP" {% if base == "GBP" %}selected{%endif%} label="Pound sterling">GBP
-                            </option>
                             <option disabled>──────────</option>
-                            <option value="AED" {% if base == "AED" %}selected{%endif%}
-                                label="United Arab Emirates dirham">
-                                AED</option>
-                            <option value="AFN" {% if base == "AFN" %}selected{%endif%} label="Afghan afghani">AFN
-                            </option>
-                            <option value="ALL" {% if base == "ALL" %}selected{%endif%} label="Albanian lek">ALL
-                            </option>
-                            <option value="AMD" {% if base == "AMD" %}selected{%endif%} label="Armenian dram">AMD
-                            </option>
-                            <option value="ANG" {% if base == "ANG" %}selected{%endif%}
-                                label="Netherlands Antillean guilder">ANG</option>
-                            <option value="AOA" {% if base == "AOA" %}selected{%endif%} label="Angolan kwanza">AOA
-                            </option>
-                            <option value="ARS" {% if base == "ARS" %}selected{%endif%} label="Argentine peso">ARS
-                            </option>
-                            <option value="AUD" {% if base == "AUD" %}selected{%endif%} label="Australian dollar">AUD
-                            </option>
-                            <option value="AWG" {% if base == "AWG" %}selected{%endif%} label="Aruban florin">AWG
-                            </option>
-                            <option value="AZN" {% if base == "AZN" %}selected{%endif%} label="Azerbaijani manat">AZN
-                            </option>
-                            <option value="BBD" {% if base == "BBD" %}selected{%endif%} label="Barbadian dollar">BBD
-                            </option>
-                            <option value="BDT" {% if base == "BDT" %}selected{%endif%} label="Bangladeshi taka">BDT
-                            </option>
-                            <option value="BGN" {% if base == "BGN" %}selected{%endif%} label="Bulgarian lev">BGN
-                            </option>
-                            <option value="BHD" {% if base == "BHD" %}selected{%endif%} label="Bahraini dinar">BHD
-                            </option>
-                            <option value="BIF" {% if base == "BIF" %}selected{%endif%} label="Burundian franc">BIF
-                            </option>
-                            <option value="BMD" {% if base == "BMD" %}selected{%endif%} label="Bermudian dollar">BMD
-                            </option>
-                            <option value="BND" {% if base == "BND" %}selected{%endif%} label="Brunei dollar">BND
-                            </option>
-                            <option value="BOB" {% if base == "BOB" %}selected{%endif%} label="Bolivian boliviano">BOB
-                            </option>
-                            <option value="BRL" {% if base == "BRL" %}selected{%endif%} label="Brazilian real">BRL
-                            </option>
-                            <option value="BSD" {% if base == "BSD" %}selected{%endif%} label="Bahamian dollar">BSD
-                            </option>
-                            <option value="BTN" {% if base == "BTN" %}selected{%endif%} label="Bhutanese ngultrum">BTN
-                            </option>
-                            <option value="BWP" {% if base == "BWP" %}selected{%endif%} label="Botswana pula">BWP
-                            </option>
-                            <option value="BYN" {% if base == "BYN" %}selected{%endif%} label="Belarusian ruble">BYN
-                            </option>
-                            <option value="BZD" {% if base == "BZD" %}selected{%endif%} label="Belize dollar">BZD
-                            </option>
                             <option value="CAD" {% if base == "CAD" %}selected{%endif%} label="Canadian dollar">CAD
                             </option>
-                            <option value="CDF" {% if base == "CDF" %}selected{%endif%} label="Congolese franc">CDF
-                            </option>
-                            <option value="CHF" {% if base == "CHF" %}selected{%endif%} label="Swiss franc">CHF</option>
-                            <option value="CLP" {% if base == "CLP" %}selected{%endif%} label="Chilean peso">CLP
-                            </option>
-                            <option value="CNY" {% if base == "CNY" %}selected{%endif%} label="Chinese yuan">CNY
-                            </option>
-                            <option value="COP" {% if base == "COP" %}selected{%endif%} label="Colombian peso">COP
-                            </option>
-                            <option value="CRC" {% if base == "CRC" %}selected{%endif%} label="Costa Rican colón">CRC
-                            </option>
-                            <option value="CUC" {% if base == "CUC" %}selected{%endif%} label="Cuban convertible peso">
-                                CUC
-                            </option>
-                            <option value="CUP" {% if base == "CUP" %}selected{%endif%} label="Cuban peso">CUP</option>
-                            <option value="CVE" {% if base == "CVE" %}selected{%endif%} label="Cape Verdean escudo">CVE
-                            </option>
-                            <option value="CZK" {% if base == "CZK" %}selected{%endif%} label="Czech koruna">CZK
-                            </option>
-                            <option value="DJF" {% if base == "DJF" %}selected{%endif%} label="Djiboutian franc">DJF
-                            </option>
-                            <option value="DKK" {% if base == "DKK" %}selected{%endif%} label="Danish krone">DKK
-                            </option>
-                            <option value="DOP" {% if base == "DOP" %}selected{%endif%} label="Dominican peso">DOP
-                            </option>
-                            <option value="DZD" {% if base == "DZD" %}selected{%endif%} label="Algerian dinar">DZD
-                            </option>
-                            <option value="EGP" {% if base == "EGP" %}selected{%endif%} label="Egyptian pound">EGP
-                            </option>
-                            <option value="ERN" {% if base == "ERN" %}selected{%endif%} label="Eritrean nakfa">ERN
-                            </option>
-                            <option value="ETB" {% if base == "ETB" %}selected{%endif%} label="Ethiopian birr">ETB
-                            </option>
+                         
                             <option value="EUR" {% if base == "EUR" %}selected{%endif%} label="EURO">EUR</option>
-                            <option value="FJD" {% if base == "FJD" %}selected{%endif%} label="Fijian dollar">FJD
-                            </option>
-                            <option value="FKP" {% if base == "FKP" %}selected{%endif%} label="Falkland Islands pound">
-                                FKP
-                            </option>
-                            <option value="GBP" {% if base == "GBP" %}selected{%endif%} label="British pound">GBP
-                            </option>
-                            <option value="GEL" {% if base == "GEL" %}selected{%endif%} label="Georgian lari">GEL
-                            </option>
-                            <option value="GGP" {% if base == "GGP" %}selected{%endif%} label="Guernsey pound">GGP
-                            </option>
-                            <option value="GHS" {% if base == "GHS" %}selected{%endif%} label="Ghanaian cedi">GHS
-                            </option>
-                            <option value="GIP" {% if base == "GIP" %}selected{%endif%} label="Gibraltar pound">GIP
-                            </option>
-                            <option value="GMD" {% if base == "GMD" %}selected{%endif%} label="Gambian dalasi">GMD
-                            </option>
-                            <option value="GNF" {% if base == "GNF" %}selected{%endif%} label="Guinean franc">GNF
-                            </option>
-                            <option value="GTQ" {% if base == "GTQ" %}selected{%endif%} label="Guatemalan quetzal">GTQ
-                            </option>
-                            <option value="GYD" {% if base == "GYD" %}selected{%endif%} label="Guyanese dollar">GYD
-                            </option>
-                            <option value="HKD" {% if base == "HKD" %}selected{%endif%} label="Hong Kong dollar">HKD
-                            </option>
-                            <option value="HNL" {% if base == "HNL" %}selected{%endif%} label="Honduran lempira">HNL
-                            </option>
-                            <option value="HRK" {% if base == "HRK" %}selected{%endif%} label="Croatian kuna">HRK
-                            </option>
-                            <option value="HTG" {% if base == "HTG" %}selected{%endif%} label="Haitian gourde">HTG
-                            </option>
-                            <option value="HUF" {% if base == "HUF" %}selected{%endif%} label="Hungarian forint">HUF
-                            </option>
-                            <option value="IDR" {% if base == "IDR" %}selected{%endif%} label="Indonesian rupiah">IDR
-                            </option>
-                            <option value="ILS" {% if base == "ILS" %}selected{%endif%} label="Israeli new shekel">ILS
-                            </option>
-                            <option value="IMP" {% if base == "IMP" %}selected{%endif%} label="Manx pound">IMP</option>
+                         
                             <option value="INR" {% if base == "INR" %}selected{%endif%} label="Indian rupee">INR
                             </option>
-                            <option value="IQD" {% if base == "IQD" %}selected{%endif%} label="Iraqi dinar">IQD</option>
-                            <option value="IRR" {% if base == "IRR" %}selected{%endif%} label="Iranian rial">IRR
-                            </option>
-                            <option value="ISK" {% if base == "ISK" %}selected{%endif%} label="Icelandic króna">ISK
-                            </option>
-                            <option value="JEP" {% if base == "JEP" %}selected{%endif%} label="Jersey pound">JEP
-                            </option>
-                            <option value="JMD" {% if base == "JMD" %}selected{%endif%} label="Jamaican dollar">JMD
-                            </option>
-                            <option value="JOD" {% if base == "JOD" %}selected{%endif%} label="Jordanian dinar">JOD
-                            </option>
-                            <option value="JPY" {% if base == "JPY" %}selected{%endif%} label="Japanese yen">JPY
+                         <option value="JPY" {% if base == "JPY" %}selected{%endif%} label="Japanese yen">JPY
                             </option>
                             <option value="KES" {% if base == "KES" %}selected{%endif%} label="Kenyan shilling">KES
                             </option>
@@ -775,7 +644,7 @@
                     <div id="submitBtndiv">
 
                         <button type="submit" name="submit" id="submitBtn" class="btn btn-primary convert-btn"
-                            disabled>CONVERT</button>
+                            >CONVERT</button>
                     </div>
                 </div>
             </div>
@@ -823,6 +692,7 @@
                             <option disabled selected>Choose region</option>
                             <option value="Asia" label="Asia"> Asia </option>
                             <option value="US" label="US"> US </option>
+                            <option value="Europe" label="Europe"> Europe </option>
                         </select>
 
 
@@ -871,15 +741,13 @@
                             <!-- <th class="col">ID</th> -->
                             <th class="col">Name</th>
                             <th class="col">Region</th>
-                            <th class="col">minDeposit</th>
-                            <th class="col">bankTransfer</th>
-                            <th class="col">withdrawlFee</th>
-                            <!-- <th class="col">negBalProtection</th> -->
-                            <th class="col">rating</th>
-                            <th class="col">benefit</th>
-                            <th class="col">platformSup</th>
-                            <th class="col">accounts</th>
-                            <th class="col">Commission</th>
+                            <th class="col">Minimum Deposit</th>
+                            <th class="col">Bank Transfer</th>
+                            <th class="col">Withdrawl Fee</th>
+                            <th class="col">Rating</th>
+                            <th class="col">Benefit</th>
+                            <th class="col">Accounts</th>
+                            <th class="col">Rates</th>
                             <th class="col">Compare</th>
                         </tr>
                     </thead>
@@ -893,10 +761,8 @@
                             <td>{{t.minDeposit}}</td>
                             <td>{{t.bankTransfer}}</td>
                             <td>{{t.withdrawlFee}}</td>
-                            <!-- <td>{{t.negBalProtection}}</td> -->
                             <td>{{t.rating}}</td>
                             <td>{{t.benefit}}</td>
-                            <td>{{t.platformSup}}</td>
                             <td>{{t.accounts}}</td>
 
                             <td>{{t.spread}}</td> <!-- will have to passs the var used to take curr value -->
@@ -909,18 +775,22 @@
 
 
                     </tbody>
-                    <tfoot>
+                    <!-- <tfoot>
                         <tr>
-                            <td colspan="10"></td>
-                            <td colspan="3" align="right">
+                            <td colspan="9"></td>
+                            <td colspan="2" align="right">
                                 <button type="submit" class="btn btn-success" name="compare"
                                     value="compare">compare</button>
                             </td>
-                            <!-- <td colspan="6"></td> -->
+                           
 
                         </tr>
-                    </tfoot>
-                </table>
+                    </tfoot>-->
+                </table> 
+                <div class="d-flex justify-content-end" style="margin-top: 15px;">
+                    <button type="submit" class="btn btn-success" name="compare"
+                    value="compare">compare</button>
+                </div>
             </form>
         </div>
         <!-- {% endif %} -->
@@ -943,7 +813,7 @@
         drop2.innerHTML = tempHTML;
 
     }
-    $('input[name="amount"]').keyup(function () {
+    /*$('input[name="amount"]').keyup(function () {
 
         if ($(this).val()) {
             $("#submitBtn").removeAttr('disabled');
@@ -951,16 +821,19 @@
         } else {
             $("#submitBtn").attr('disabled', 'disabled');
         }
-    });
+    });*/
     var myDiv = document.getElementById("expanded");
-     $('#submitBtn').click(function () {
+    $('#submitBtn').click(function () {
         $('#submitBtn').html('<div class="spinner-border spinner-border-sm" role="status" ></div>');
         setTimeout(hide, 1000);
     });
     hide = function () {
 
-        $('#submitBtn').html('<div class="spinner-border" style="display:none" role="status" aria-hidden="true"></div>RECONVERT').removeAttr('disabled');
-        myDiv.style.display = "block";
+        $('#submitBtn').html('<div class="spinner-border" style="display:none" role="status" aria-hidden="true"></div>CONVERT').removeAttr('disabled');
+        // myDiv.style.display = "block";
+        // $("#expanded").style.display = "block";
+        document.getElementById("expanded").style.display = "block";
+  
     };
  /*   $('#submitBtn').click(function () {
         $('#submitBtn').html('<div class="spinner-border spinner-border-sm" role="status" ></div>');
@@ -975,7 +848,7 @@
     };*/
 
     $(document).ready(function () {
-        $('#table1').DataTable({
+        /* $('#table1').DataTable({
 
             responsive: true,
             language: {
@@ -986,9 +859,30 @@
                 },
 
             }
-        })
-        $('#table2').DataTable({
+        })*/
+        
+        $('#table1').DataTable({
+            "columnDefs": [
+                { "width": "20%", "targets": 0 },
+                { "width": "20%", "targets": 1 },
+                { "width": "20%", "targets": 2 },
+                { "width": "40%", "targets": 3 }
+            ],
+            responsive: true,
+            language: {
+                //customize pagination prev and next buttons: use arrows instead of words
+                'paginate': {
+                    'previous': '<span class="fa fa-chevron-left"></span>',
+                    'next': '<span class="fa fa-chevron-right"></span>'
+                },
 
+            }
+        })
+
+        $('#table2').DataTable({
+            "columnDefs": [
+            { "width": "10%", "targets": 0},
+        ],
             responsive: true,
             language: {
                 //customize pagination prev and next buttons: use arrows instead of words

@@ -13,12 +13,12 @@ import calendar
 
 
 API_KEY = "taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN"
-API_KEY1 = "meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV"
+API_KEY1 = "UxhMgHd56zqfUBcSjsswfL"
 API_KEY2 = "MyQvGNXzWw2DPorALLO1Cet"
 API_KEY3 = "R5jC9C67BMmAwkbGK5rtsY"
 API_KEY4 = "Dhd5RG5RAU7CXMJTaTqhAh"
 # vishal = taTjcoDno4fAXZKnSBLdvAEKonjHUq3FHdygpJiCwiRYdPKMhN
-# ravi = meZyuHiwLZxWD1xaBOPfkHtQx4FiWnuhQQMNxsmLQXrL12YveV
+# ravi = UxhMgHd56zqfUBcSjsswfL
 # vani = MyQvGNXzWw2DPorALLO1Cet
 # vishal2 = R5jC9C67BMmAwkbGK5rtsY
 # sanket = Dhd5RG5RAU7CXMJTaTqhAh

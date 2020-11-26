@@ -35,19 +35,27 @@
         <H3 style="color: #fff;"> Last 30 days Low : {{D_Low}} </H3><br>
         <div>
             <h1 id="chart_heading" class="desc"> Daily Analysis </h1>
-            <div id="D_div" style="width: 50%;">
-                {{D_fig | safe}}<br>
-            </div>
-            <div id="W_div" style="display : none; width : 50%;">
-                {{W_fig | safe}}<br>
-            </div>
-            <div id="M_div" style="display : none; width : 50%;">
-                {{M_fig | safe}}<br>
-            </div>
+           <div style="display: flex;">
+               <div>
+                <div id="D_div" style="width: 50%;">
+                    {{D_fig | safe}}<br>
+                </div>
+                <div id="W_div" style="display : none; width : 50%;">
+                    {{W_fig | safe}}<br>
+                </div>
+                <div id="M_div" style="display : none; width : 50%;">
+                    {{M_fig | safe}}<br>
+                </div>
+               </div>
+               <div>
+<h4>Dummy</h4>
+               </div>
+           </div>
+           
         </div>
-        <button type="button" id="weekly" onclick="myFunction();"> Show Weekly Analysis</button>
-        <button type="button" id="monthly" onclick=" myFunction();"> Show Monthly Analysis</button>
-        <button type="button" id="daily" onclick="myFunction();"> Show Daily Analysis</button>
+        <button type="button" id="weekly" class="chartbtn" onclick="myFunction();"> Show Weekly Analysis</button>
+        <button type="button" id="monthly"  class="chartbtn" onclick=" myFunction();"> Show Monthly Analysis</button>
+        <button type="button" id="daily"   class="chartbtn"onclick="myFunction();"> Show Daily Analysis</button>
 
     </div>
 </body>
