@@ -488,24 +488,25 @@
             <h3 class="grey-normal mb-0"> Last Updated on : {{lastUpd}} UTC</h3>
         </div>
         <!-- {% endif %} -->
-    </div>
+        <br>
+        <!-- {% if flag == "show"%} -->
+        <div class="container-fluid bg-3 text-center" style="display:''; ">
+            <div class="row mrt-40">
+                <div class="col-md-6 col-sm-12 btn-align-right">
 
+                    <a class="btn btn-outline-primary mob-btn" href="{% url 'charts' %}" role="button">Get Chart
+                        Analysis</a>
+                </div>
+                <div class="col-md-6 col-sm-12 btn-align-left">
+                    <a class="btn btn-outline-primary  mob-btn" href="{% url 'market' %}" role="button">Get Market Hours</a>
+                </div>
 
-    <br>
-    <!-- {% if flag == "show"%} -->
-    <div class="container-fluid bg-3 text-center" style="display:''; ">
-        <div class="row mrt-40">
-            <div class="col-md-6 col-sm-12 btn-align-right">
-
-                <a class="btn btn-outline-primary mob-btn" href="{% url 'charts' %}" role="button">Get Chart
-                    Analysis</a>
             </div>
-            <div class="col-md-6 col-sm-12 btn-align-left">
-                <a class="btn btn-outline-primary  mob-btn" href="{% url 'market' %}" role="button">Get Market Hours</a>
-            </div>
-
         </div>
     </div>
+
+
+
     <br>
     <br>
     <!-- {% endif %} -->
