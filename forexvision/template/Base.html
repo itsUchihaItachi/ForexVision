@@ -482,7 +482,7 @@
         <!-- {% if flag == "show"%} -->
 
         <div id="expanded" >
-            <h1 class="green-text mb-0"> Amount = {{totalAmount}} </h1>
+            <h1 class="green-text mb-0"> Amount = {{totalAmount}} {{counter}}</h1>
             <h2 class="grey-text mb-0"> 1 {{base}} = {{counterrate}} {{counter}}</h2>
             <h2 class="grey-text mb-16"> 1 {{counter}} = {{baserate}} {{base}}</h2>
             <h3 class="grey-normal mb-0"> Last Updated on : {{lastUpd}} UTC</h3>
@@ -515,7 +515,8 @@
         <!-- {% if flag == "show" %}
         {%else%} -->
         <div class="" style="display: 'none';">
-            <div align="right">
+            <H1>Forex Providers</H1>
+        <!--    <div align="right">
                 <form method="POST" name="form1"> {%csrf_token%}
                     <td colspan="11">
 
@@ -530,7 +531,7 @@
                         <a class="btn btn-primary" href="/" role="button">Reset</a>
                     </td>
                 </form>
-            </div>
+            </div>-->
             <table class="table  table-striped" id="table1" style="width: 100%;">
                 <thead>
                     <tr class="tabelhead">
